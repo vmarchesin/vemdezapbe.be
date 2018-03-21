@@ -3,9 +3,11 @@
 We're gonna need this http://unicode.org/emoji/charts/full-emoji-list.html"""
 
 import random
+from flask import Flask
+from flask_restful import reqparse, Resource, Api
 from wordlists import discard_tokens, specific_tokens, mood_emoji
 
-debug = True
+debug = False
 """debug print function"""
 def printd(text):
     if debug:
@@ -84,16 +86,43 @@ def zapinate(text, mood="happy", zap_rate=0.5, zap_strength=3):
 
         # <br/> or '/n'
         # set with <br/> because output is html        
-        zapinated_text += "<br/>"
+        # zapinated_text += "<br/>"
 
     # turning on cruise control for cool
-    zapinated_text = zapinated_text.upper()
+    zapinated_text = zapinated_text.upper().strip()
 
     return zapinated_text
 
-if __name__ == '__main__':
-    # main function, for debugging. modify for release.
-    text = "esse texto vai ser zapeado demais bb"
-    zapinated_text = zapinate(text)
+app = Flask(__name__)
+api = Api(app)
 
-    printd("Output: "+format(zapinated_text))
+parser = reqparse.RequestParser()
+parser.add_argument("zap", type=str, help='Zap to be zapinated')
+parser.add_argument("mood", type=str, help='Zapinated text overall mood')
+parser.add_argument("rate", type=float, help='Rate at which emojis will appear')
+parser.add_argument("strength", type=int, help='How strong will the emojis be')
+
+class Zapinator(Resource):
+    def post(self):
+        args = parser.parse_args()
+        print("args")
+        print(args)
+        zap = args.zap
+        mood = args.mood or "happy"
+        rate = args.rate or 0.5
+        strength = args.strength or 3
+        return {"zap": zapinate(zap, mood, rate, strength)}
+
+class Version(Resource):
+        def get(self):
+            return {"version": "v1.0"}
+
+api.add_resource(Version, '/api')
+api.add_resource(Zapinator, '/api/v1.0/zapinate')
+
+if __name__ == '__main__':
+    app.run()
+
+
+
+
