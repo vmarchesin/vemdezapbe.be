@@ -6,7 +6,6 @@ const specificTokens = tokens.specificTokens
 Array.prototype.choices = function(n) {
   let choices = []
 
-  console.log(this)
   for (let i = 0; i < n; i++) {
     choices.push(this[Math.floor(Math.random() * this.length)])
   }

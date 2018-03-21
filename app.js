@@ -1,6 +1,6 @@
 const express = require("express")
 const fs = require("fs")
-const api = require("./api/index.js")
+const api = require(`${__dirname}/api`)
 const bodyParser = require("body-parser")
 const version = fs.readFileSync(`${__dirname}/api/VERSION`, "utf-8")
 
@@ -25,6 +25,7 @@ app.post(`/api/${version}`, (req, res) => {
   res.send(response)
 })
 
-app.listen(3000, function () {
-  console.log("Zapinating on port 3000!")
+const port = process.env.PORT || 8080
+app.listen(port, function () {
+  console.log(`Zapinating on port ${port}!`)
 })

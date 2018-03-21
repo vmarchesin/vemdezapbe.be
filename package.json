@@ -4,18 +4,18 @@
   "description": "Vem de zap bb",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MarEe0/zapinator.git"
+    "url": "git+https://github.com/vmarchesin/vemdezapbe.be.git"
   },
   "author": "Vinicius Marchesin Araujo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MarEe0/zapinator/issues"
+    "url": "https://github.com/vmarchesin/vemdezapbe.be/issues"
   },
-  "homepage": "https://github.com/MarEe0/zapinator#readme",
+  "homepage": "https://github.com/vmarchesin/vemdezapbe.be#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.3"
