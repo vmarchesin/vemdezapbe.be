@@ -1,3 +1,4 @@
-/**/node_modules
+/web/node_modules
+/api/__pycache__
 
-/py/*.html
+/api/*.html
