@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt_br">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Vem de ZAP bb - Zapeador de textos</title>
+  <meta name="description" content="Vem de zap bb">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/slider.css">
+  <link rel="stylesheet" href="css/zap.css">
+  
+  <!--Javascripts  -->
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"/></script>
+  <script src="js/zap.js"></script>
+</head>
+
+<body>
+  <header>
+    <center>
+      <h1>
+        <span class="align-middle">VEM DE ZAP bb</span>
+        <img id="logo" class="align-middle" src="images/whatsapp-logo.png" alt="logo" />
+      </h1>
+    </center>
+  </header>
+
+  <aside></aside>
+
+  <div class="row justify-content-center">
+    <div class="col-sm-12 col-md-5">
+        <center>
+            <section id="intro">
+              <div class="wrap">
+                <a href="http://vemdezapbe.be">vemdezapbe.be</a>&nbsp;<img class="emoji-small" src="images/emojis/fistbump.png" alt="fistbump"/>&nbsp;é um zapeador de texto automático. Qualquer mensagem pode ser zapeada pra mandar pro seu bebê&nbsp;<img class="emoji-small" src="images/emojis/sunglasses.png" alt="sunglasses"/>. Além da versão web temos também uma API para você usar nos seus projetos&nbsp;<img class="emoji-small" src="images/emojis/top.png" alt="top"/>.
+              </div>
+            </section>
+        
+            <hr>
+        
+            <section id="mood-selection">
+              <div class="mb10">Escolha o humor do seu zap:</div>
+              <button class="mood-button grow active" data-mood="happy">
+                  <img class="emoji" src="images/emojis/happy.png" alt="happy"/><br/>
+                  Feliz
+              </button>
+              <button class="mood-button grow" data-mood="angry">
+                  <img class="emoji" src="images/emojis/angry.png" alt="angry"/><br/>
+                  Bravo
+              </button>
+            </section>
+          
+            <hr>
+            
+            <section id="strength-selection">
+              <div>Escolha a intensidade do seu zap:</div>
+              <input
+                id="strength-slider"
+                type="range"
+                min="0"
+                max="4"
+                step="1"
+                value="0"
+              >
+              <div id="strength-show">
+                  <div class="mb10">Zap força fraca</div>
+                  <img class="emoji" src="images/emojis/crazy.png" alt="crazy"/>
+              </div>
+            </section>
+        
+            <section class="mt20">
+              <textarea id="text-box" rows="10" placeholder="Cole seu texto para zapear aqui..."></textarea>
+            </section>
+          </center>
+    </div>
+ 
+  </div>
+</body>
+
+</html>

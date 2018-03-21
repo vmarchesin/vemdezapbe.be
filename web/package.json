@@ -1,0 +1,22 @@
+{
+  "name": "zapinator",
+  "version": "1.0.0",
+  "description": "Vem de zap bb",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarEe0/zapinator.git"
+  },
+  "author": "Vinicius Marchesin Araujo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarEe0/zapinator/issues"
+  },
+  "homepage": "https://github.com/MarEe0/zapinator#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}

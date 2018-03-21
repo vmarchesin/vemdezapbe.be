@@ -1,0 +1,102 @@
+/* Layout */
+body {
+  background-color: #f2f2f2;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", 
+  Helvetica, Arial, "Lucida Grande", sans-serif;
+
+  margin: 0 auto;
+
+  font-size: 14px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img.emoji, #logo {
+  height: 32px;
+  width: 32px;
+}
+
+img.emoji-small {
+  height: 14px;
+  width: 14px;
+}
+
+hr {
+  border: 1px dashed #999999;
+  margin: 20px 0;
+}
+
+/* Styles */
+.mood-button {
+  margin: 5px 20px;
+  width: 100px;
+  height: 100px;
+
+  cursor: pointer;
+
+  background-color: white;
+  border-radius: 4px;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.mood-button:active, .mood-button:focus {
+  outline: 0;
+  border: none;
+}
+
+.mood-button.active {
+  border: 2px solid #25D366;
+}
+
+.grow { transition: all .2s ease-in-out; }
+.grow:hover { transform: scale(1.1); }
+
+#text-box {
+  width: 90%;
+  min-width: 90%;
+  min-height: 100px;
+  max-height: 500px;
+}
+
+#strength-show div {
+  font-weight: 600;
+}
+
+/* Helpers */
+.align-middle {
+  vertical-align: middle;
+}
+
+.mt10 {
+  margin-top: 10px;
+}
+
+.mt20 {
+  margin-top: 20px;
+}
+
+.mb10 {
+  margin-bottom: 10px;
+}
+
+.mb20 {
+  margin-bottom: 20px;
+}
+
+.row {
+  margin: 0;
+}
+
+.wrap {
+  word-wrap: break-word;;
+}
