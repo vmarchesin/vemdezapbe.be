@@ -17,6 +17,11 @@ a:hover {
   text-decoration: underline;
 }
 
+button:focus, button:active {
+  outline: 0;
+  border: none;
+}
+
 img.emoji, #logo {
   height: 32px;
   width: 32px;
@@ -49,11 +54,6 @@ hr {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
-.mood-button:active, .mood-button:focus {
-  outline: 0;
-  border: none;
-}
-
 .mood-button.active {
   border: 2px solid #25D366;
 }
@@ -72,29 +72,50 @@ hr {
   font-weight: 600;
 }
 
+#ZAP {
+  background-color: #25D366;
+  font-weight: bold;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 150px;
+  height: 50px;
+  transition: 0.4s;
+}
+
+#ZAP:hover {
+  filter: brightness(85%);
+}
+
+#ZAP:active {
+  background-color: rgb(24, 143, 68);
+}
+
 /* Helpers */
 .align-middle {
   vertical-align: middle;
 }
 
 .mt10 {
-  margin-top: 10px;
+  margin-top: 10px!important;
 }
 
 .mt20 {
-  margin-top: 20px;
+  margin-top: 20px!important;
 }
 
 .mb10 {
-  margin-bottom: 10px;
+  margin-bottom: 10px!important;
 }
 
 .mb20 {
-  margin-bottom: 20px;
+  margin-bottom: 20px!important;
 }
 
 .row {
-  margin: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .wrap {

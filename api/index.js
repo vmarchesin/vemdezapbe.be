@@ -13,6 +13,14 @@ Array.prototype.choices = function(n) {
   return choices
 }
 
+const invalidToken = (token, mood) => {
+  if (discardTokens.includes(token) || moodEmojis[mood].includes(token)) {
+    return true
+  }
+
+  return false
+}
+
 const zapinate = (text, mood, rate, strength) => {
   if (Number.isInteger(strength)) {
     strength = [1, strength]
@@ -22,7 +30,7 @@ const zapinate = (text, mood, rate, strength) => {
 
   text.toLowerCase().split("\n").forEach(line => {
     line.replace(/\s+/g, " ").split(" ").forEach(token => {
-      if (token.length <= 2 || discardTokens.includes(token)) {
+      if (token.length <= 2 || invalidToken(token, mood)) {
         zapinated += `${token} `
         return
       }
