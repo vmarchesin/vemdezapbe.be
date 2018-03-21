@@ -3,6 +3,7 @@
 We're gonna need this http://unicode.org/emoji/charts/full-emoji-list.html"""
 
 import random
+import os
 from flask import Flask
 from flask_restful import reqparse, Resource, Api
 from wordlists import discard_tokens, specific_tokens, mood_emoji
@@ -121,7 +122,8 @@ api.add_resource(Version, '/api')
 api.add_resource(Zapinator, '/api/v1.0/zapinate')
 
 if __name__ == '__main__':
-    app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
 
 
 
