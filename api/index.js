@@ -20,6 +20,7 @@ const zapinate = ({ zap, mood = "happy", rate = 0.5, strength = 3 }) => {
 
   zap.toLowerCase().split("\n").forEach(line => {
     line.replace(/\s+/g, " ").split(" ").forEach(token => {
+      const originalToken = token
       token = utils.removerAcentos(token)
 
       const isSpecificToken = specific.includes(token)
@@ -42,9 +43,9 @@ const zapinate = ({ zap, mood = "happy", rate = 0.5, strength = 3 }) => {
         }
 
         chosenEmoji = utils.choices(possibleEmojis, zapStrength)
-        zapinated += `${token} ${chosenEmoji.join("")} `
+        zapinated += `${originalToken} ${chosenEmoji.join("")} `
       } else {
-        zapinated += `${token} `
+        zapinated += `${originalToken} `
       }
     })
   })
