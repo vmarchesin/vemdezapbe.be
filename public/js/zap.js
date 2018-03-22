@@ -38,7 +38,7 @@ $(function() {
   $("#ZAP").on("click", () => {
     const zap = $("#text-box").val() || "Zapeia esse texto bb que vai ficar top demais"
     const mood = $(".mood-button.active").data("mood")
-    const strength = $("#strength-slider").val() + 1
+    const strength = Number($("#strength-slider").val() + 1)
 
     $.post("/api/v1.0", { zap, mood, strength }, res => {
       $("#text-box").val(res.zap)
