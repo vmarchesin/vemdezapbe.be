@@ -19,13 +19,25 @@ app.get("/api", (req, res) => {
 
 app.post(`/api/${version}`, (req, res) => {
   const data = req.body
-  let response = {
-    zap: api.zapinate(data.zap, data.mood || "happy", data.rate || 0.5, data.strength || 3)
+  let params = {}
+  if (!data.zap) {
+    res.send({ error: { code: 10, message: "zap property missing" }, version })
+    return
+  } else {
+    Object.assign(params, { zap: data.zap })
   }
-  res.send(response)
+
+  Object.assign(params, data.mood && { mood: data.mood })
+  Object.assign(params, data.rate && { rate: data.rate })
+  Object.assign(params, data.strength && { strength: data.strength })
+  
+  res.send({
+    version,
+    zap: api.zapinate(params),
+  })
 })
 
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 5000
 app.listen(port, function () {
   console.log(`Zapinating on port ${port}!`)
 })

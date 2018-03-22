@@ -1,52 +1,47 @@
 const tokens = require("./tokens.js")
-const discardTokens = tokens.discardTokens
-const moodEmojis = tokens.moodEmojis
-const specificTokens = tokens.specificTokens
+const utils = require("./utils.js")
 
-Array.prototype.choices = function(n) {
-  let choices = []
-
-  for (let i = 0; i < n; i++) {
-    choices.push(this[Math.floor(Math.random() * this.length)])
-  }
-
-  return choices
-}
-
-const invalidToken = (token, mood) => {
-  if (discardTokens.includes(token) || moodEmojis[mood].includes(token)) {
+const isInvalidToken = token => {
+  if (tokens.discardTokens.join(" ").match(token) || token.match(utils.emojiParseRegEx)) {
     return true
   }
 
   return false
 }
 
-const zapinate = (text, mood, rate, strength) => {
+const zapinate = ({ zap, mood = "happy", rate = 0.5, strength = 3 }) => {
   if (Number.isInteger(strength)) {
-    strength = [1, strength]
+    strength = [Math.floor(strength/2), strength]
   }
+
+  const specific = Object.keys(tokens.specificTokens)
 
   let zapinated = ""
 
-  text.toLowerCase().split("\n").forEach(line => {
+  zap.toLowerCase().split("\n").forEach(line => {
     line.replace(/\s+/g, " ").split(" ").forEach(token => {
-      if (token.length <= 2 || invalidToken(token, mood)) {
+      token = utils.removerAcentos(token)
+
+      const isSpecificToken = specific.includes(token)
+      const isSpecificTokenPlural = specific.map(t => utils.pluralizar(t)).includes(token)
+
+      if (!isSpecificToken && (token.length <= 2 || isInvalidToken(token))) {
         zapinated += `${token} `
         return
       }
 
       if (Math.random() < rate) {
-        let zapStrength = strength[Math.floor(Math.random() * 2)]
+        let zapStrength = strength[Math.round(Math.random())]
         let possibleEmojis
         let chosenEmoji
-
-        if (Object.keys(specificTokens).includes(token)) {
-          possibleEmojis = specificTokens[token]
+        
+        if (isSpecificToken || isSpecificTokenPlural) {
+          possibleEmojis = tokens.specificTokens[token]
         } else {
-          possibleEmojis = moodEmojis[mood]
+          possibleEmojis = tokens.moodEmojis[mood]
         }
 
-        chosenEmoji = possibleEmojis.choices(zapStrength)
+        chosenEmoji = utils.choices(possibleEmojis, zapStrength)
         zapinated += `${token} ${chosenEmoji.join("")} `
       } else {
         zapinated += `${token} `
