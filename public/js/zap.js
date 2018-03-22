@@ -1,26 +1,10 @@
 const zapStrengthShow = value => {
   const zapEmojisPerStrength = [1, 2, 3, 4, 8]
   const emojiArray = {
-    angry: [
-      "steaming",
-      "skullandbones",
-      "angry",
-      "stop",
-      "under18",
-      "bomb",
-      "bomb",
-      "cursing",
-    ],
-    happy: [
-      "crazy",
-      "surprised",
-      "sunglasses",
-      "muscle",
-      "lol",
-      "okay",
-      "okay",
-      "top",
-    ],
+    angry: ["steaming", "skullandbones", "angry", "stop", "under18", "bomb", "bomb", "cursing"],
+    happy: ["crazy", "surprised", "sunglasses", "muscle", "lol", "okay", "okay", "top"],
+    sad: ["crazy", "surprised", "sunglasses", "muscle", "lol", "okay", "okay", "top"],
+    sassy: ["crazy", "surprised", "sunglasses", "muscle", "lol", "okay", "okay", "top"],
   }
   const strengthTitleArray = [
     "Zap força fraca",
