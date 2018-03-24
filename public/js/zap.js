@@ -4,6 +4,7 @@ const emojiArray = {
   happy: ["crazy", "surprised", "sunglasses", "muscle", "lol", "okay", "okay", "top"],
   sad: ["sad-sweat", "sad", "frowning", "confounded", "nervous", "crying", "crying", "disappointed"],
   sassy: ["love-cat", "smirk", "crazy", "love-eyes", "love-eyes", "point-right", "okay", "kiss"],
+  sick: ["sick", "nausea", "weary", "sneezing", "bandage", "vomiting", "vomiting", "thermometer"]
 }
 const strengthTitleArray = [
   "Zap força fraca",
