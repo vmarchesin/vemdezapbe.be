@@ -20,16 +20,16 @@ const zapinate = ({ zap, mood = "happy", rate = 0.5, strength = 3, toUpper = fal
 
   let zapinated = ""
 
-  zap.toLowerCase().split("\n").forEach(line => {
+  zap.split("\n").forEach(line => {
     line.replace(/\s+/g, " ").split(" ").forEach(token => {
       const originalToken = token
-      token = utils.removerAcentos(token)
+      token = utils.removerAcentos(token.toLowerCase())
 
       const isSpecificToken = specific.includes(token)
       const isSpecificTokenPlural = specific.map(t => utils.pluralizar(t)).includes(token)
 
       if (!isSpecificToken && (token.length <= 2 || isInvalidToken(token))) {
-        zapinated += `${token} `
+        zapinated += `${originalToken} `
         return
       }
 
@@ -49,6 +49,7 @@ const zapinate = ({ zap, mood = "happy", rate = 0.5, strength = 3, toUpper = fal
         zapinated += `${originalToken} `
       }
     })
+    zapinated += "\n"
   })
 
   if (toUpper) {
