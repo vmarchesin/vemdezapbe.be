@@ -9,9 +9,11 @@ const isInvalidToken = token => {
   return false
 }
 
-const zapinate = ({ zap, mood = "happy", rate = 0.5, strength = 3 }) => {
+const zapinate = ({ zap, mood = "happy", rate = 0.5, strength = 3, toUpper = false }) => {
   if (Number.isInteger(strength)) {
     strength = [Math.floor(strength/2), strength]
+  } else {
+    strength = [1, 3]
   }
 
   const specific = Object.keys(tokens.specificTokens)
@@ -34,7 +36,6 @@ const zapinate = ({ zap, mood = "happy", rate = 0.5, strength = 3 }) => {
       if (Math.random() < rate) {
         let zapStrength = strength[Math.round(Math.random())]
         let possibleEmojis
-        let chosenEmoji
         
         if (isSpecificToken || isSpecificTokenPlural) {
           possibleEmojis = tokens.specificTokens[token]
@@ -42,15 +43,19 @@ const zapinate = ({ zap, mood = "happy", rate = 0.5, strength = 3 }) => {
           possibleEmojis = tokens.moodEmojis[mood]
         }
 
-        chosenEmoji = utils.choices(possibleEmojis, zapStrength)
-        zapinated += `${originalToken} ${chosenEmoji.join("")} `
+        let chosenEmojis = utils.choices(possibleEmojis, zapStrength)
+        zapinated += `${originalToken} ${chosenEmojis.join("")} `
       } else {
         zapinated += `${originalToken} `
       }
     })
   })
 
-  return zapinated.toUpperCase().trim()
+  if (toUpper) {
+    zapinated = zapinated.toUpperCase()
+  }
+
+  return zapinated.trim()
 }
 
 module.exports = {

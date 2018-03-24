@@ -1,47 +1,46 @@
 // https://gist.github.com/marioluan/6923123#file-remover-acentos-js
-function removerAcentos( newStringComAcento ) {
-  let string = newStringComAcento
+const removerAcentos = str => {
 	let mapaAcentosHex 	= {
-		a : /[\xE0-\xE6]/g,
-		e : /[\xE8-\xEB]/g,
-		i : /[\xEC-\xEF]/g,
-		o : /[\xF2-\xF6]/g,
-		u : /[\xF9-\xFC]/g,
-		c : /\xE7/g,
-		n : /\xF1/g
+		a: /[\xE0-\xE6]/g,
+		e: /[\xE8-\xEB]/g,
+		i: /[\xEC-\xEF]/g,
+		o: /[\xF2-\xF6]/g,
+		u: /[\xF9-\xFC]/g,
+		c: /\xE7/g,
+		n: /\xF1/g
 	}
 
-	for ( let letra in mapaAcentosHex ) {
-		let expressaoRegular = mapaAcentosHex[letra]
-		string = string.replace( expressaoRegular, letra )
+	for (let letra in mapaAcentosHex) {
+		let regex = mapaAcentosHex[letra]
+		str = str.replace(regex, letra)
 	}
 
-  return string
+  return str
 }
 
 const pluralizar = palavra => {
 	const regras = {
 		acrescentar: {
-				"s": ["a", "e", "i", "o", "u", "ã", "ãe"],
-				"es": ["r", "z", "n", "ás"],
-				"": ["is", "us", "os"],
+			"s": ["a", "e", "i", "o", "u", "ã", "ãe"],
+			"es": ["r", "z", "n", "ás"],
+			"": ["is", "us", "os"],
 		},
 		substituir: {
-				"ais": "al",
-				"eis": "el",
-				"ois": "ol",
-				"uis": "ul",
-				"is": "il",
-				"ns": "m",
-				"eses": "ês",
-				"ões": "ão",
+			"ais": "al",
+			"eis": "el",
+			"ois": "ol",
+			"uis": "ul",
+			"is": "il",
+			"ns": "m",
+			"eses": "ês",
+			"ões": "ão",
 		},
 		excecoes: {
-				"males": "mal",
-				"cônsules": "cônsul",
-				"méis": "mel",
-				"féis": "fel",
-				"cais": "cal",
+			"males": "mal",
+			"cônsules": "cônsul",
+			"méis": "mel",
+			"féis": "fel",
+			"cais": "cal",
 		},
 		sem_plural: [
 			"não",
@@ -88,17 +87,17 @@ const pluralizar = palavra => {
 				}
 				break
 			case 'sem_plural':
-				regras[regra].forEach(function(r) {
+				regras[regra].forEach(r => {
 					if (palavra === r) plural = palavra
 				})
 				break
-			}
+		}
 	}
 
 	return plural !== "" ? plural : palavra
 }
 
-const choices = function(arr, n) {
+const choices = (arr, n) => {
   let choices = []
 
   n = Math.min(n, arr.length+1)
