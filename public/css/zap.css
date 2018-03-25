@@ -100,7 +100,7 @@ footer {
   font-weight: 600;
 }
 
-#ZAP {
+.zap {
   background-color: #25D366;
   font-weight: bold;
   color: white;
@@ -110,6 +110,7 @@ footer {
   width: 150px;
   height: 50px;
   transition: 0.4s;
+  margin: 5px;
 }
 
 #ZAP:hover {
@@ -123,6 +124,10 @@ footer {
 /* Helpers */
 .align-middle {
   vertical-align: middle;
+}
+
+.hidden {
+  display: none;
 }
 
 .mt10 {

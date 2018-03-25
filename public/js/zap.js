@@ -50,7 +50,7 @@ $(() => {
     zapStrengthShow($("#strength-slider").val())
   })
 
-  $("#ZAP").on("click", () => {
+  $("#vemdezap").on("click", () => {
     const zap = $("#text-box").val() || "Zapeia esse texto bb que vai ficar top demais"
     const mood = $(".mood-button.active").data("mood")
     const strength = Number($("#strength-slider").val() + 1)
@@ -61,6 +61,12 @@ $(() => {
       if (res.gemidao) {
         new Audio("audio/gemidao.mp3").play()
       }
+
+      $("#zapshare button").removeClass("hidden")
     })
+  })
+
+  $("#zapshare").on("click", function() {
+    this.href = `whatsapp://send?text=${encodeURI($("#text-box").val())}`
   })
 })
