@@ -20,6 +20,7 @@ app.get("/api", (req, res) => {
 })
 
 app.post(`/api/${version}`, (req, res) => {
+  const xStart = Date.now()
   const data = req.body
   let params = {}
   if (!data.zap) {
@@ -33,10 +34,14 @@ app.post(`/api/${version}`, (req, res) => {
   Object.assign(params, data.rate && { rate: data.rate })
   Object.assign(params, data.strength && { strength: data.strength })
   
-  res.send({
-    version,
-    zap: api.zapinate(params),
-  })
+  let response = { version, zap: api.zapinate(params) }
+  if (Math.floor(Math.random() * 100 + 1 ) >= 99) {
+    response.gemidao = "HÃÃÃÃÃÃNNN ÕÕÕÕHH ÕÕÕÕÕÕÃHHH ÃÃÃÃÃÃÃHNN"
+  }
+  
+  response.requestTime = Date.now() - xStart
+
+  res.send(response)
 })
 
 const port = process.env.PORT || 5000
