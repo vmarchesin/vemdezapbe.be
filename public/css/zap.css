@@ -4,9 +4,11 @@ body {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", 
   Helvetica, Arial, "Lucida Grande", sans-serif;
 
-  margin: 0 auto;
-
   font-size: 14px;
+
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 a {
@@ -37,7 +39,33 @@ hr {
   margin: 20px 0;
 }
 
+header {
+  min-height: 60px;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  background-color: #075E54;
+  padding: 20px;
+  min-height: 100px;
+}
+
 /* Styles */
+.clickable {
+  cursor: pointer;
+}
+
+.github:hover {
+  color: #212529;
+}
+
+.white {
+  color: white;
+}
+
 .mood-button {
   margin: 10px;
   width: 100px;
@@ -103,6 +131,10 @@ hr {
 
 .mt20 {
   margin-top: 20px!important;
+}
+
+.m5 {
+  margin: 5px;
 }
 
 .mb10 {
