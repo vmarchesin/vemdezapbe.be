@@ -9,6 +9,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static(`${__dirname}/public`))
 
+app.use("/favicon.ico", express.static(`${__dirname}/public/images/favicon.ico`))
+
 app.get("/", (req, res) => {
   res.sendFile(`${__dirname}/views/home.html`)
 })
