@@ -18,84 +18,7 @@ const removerAcentos = str => {
   return str
 }
 
-const pluralizar = palavra => {
-	const regras = {
-		acrescentar: {
-			"s": ["a", "e", "i", "o", "u", "ã", "ãe"],
-			"es": ["r", "z", "n", "ás"],
-			"": ["is", "us", "os"],
-		},
-		substituir: {
-			"ais": "al",
-			"eis": "el",
-			"ois": "ol",
-			"uis": "ul",
-			"is": "il",
-			"ns": "m",
-			"eses": "ês",
-			"ões": "ão",
-		},
-		excecoes: {
-			"males": "mal",
-			"cônsules": "cônsul",
-			"méis": "mel",
-			"féis": "fel",
-			"cais": "cal",
-		},
-		sem_plural: [
-			"não",
-		],
-	}
-
-	let regex_troca =  "^([a-zA-Zà-úÀ-Ú]*)(%s)$"
-	let plural = ""
-
-	for ( let regra in regras ) {
-		switch ( regra ) {
-			case 'acrescentar':
-				for ( let adicao in regras[regra] ) {
-						let busca = regex_troca.replace("%s", regras[regra][adicao].join("|"))
-						let regex = new RegExp(busca, 'i')
-						if ( regex.exec(palavra) !== null ) {
-							plural = palavra + adicao
-							break
-						}
-				}
-				break
-			case 'substituir':
-				for ( let substituicao in regras[regra] ) {
-					let busca = regex_troca.replace("%s", regras[regra][substituicao])
-					let regex = new RegExp(busca, 'i')
-					if ( regex.exec(palavra) !== null ) {
-						if ( palavra.match(/([áéíóú])/) !== null && regex.exec(palavra)[2] == "il" ) {
-							plural = palavra.replace("il", "eis")
-							break
-						} else {
-							let busca_sub = new RegExp(regex.exec(palavra)[2] + '$', 'i')
-							plural = palavra.replace(busca_sub, substituicao)
-							break
-						}
-					}
-				}
-				break
-			case 'excecoes':
-				for ( let excecao in regras[regra] ) {
-					if ( palavra == regras[regra][excecao] ) {
-						plural = excecao
-						break
-					}
-				}
-				break
-			case 'sem_plural':
-				regras[regra].forEach(r => {
-					if (palavra === r) plural = palavra
-				})
-				break
-		}
-	}
-
-	return plural !== "" ? plural : palavra
-}
+const cleanToken = text => text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "")
 
 const choices = (arr, n) => {
   let choices = []
@@ -112,7 +35,7 @@ const emojiParseRegEx = /(?:[\u2700-\u27bf]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800
 
 module.exports = {
 	choices,
+	cleanToken,
 	emojiParseRegEx,
-	pluralizar,
 	removerAcentos,
 }

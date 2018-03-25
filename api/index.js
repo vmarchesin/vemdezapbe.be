@@ -53,7 +53,7 @@ const zapinate = ({ zap, mood = "happy", rate = 0.5, strength = 3, toUpper = fal
   zap.split("\n").forEach(line => {
     line.replace(/\s+/g, " ").split(" ").forEach(token => {
       const originalToken = token
-      token = utils.removerAcentos(token.toLowerCase())
+      token = utils.cleanToken(utils.removerAcentos(token.toLowerCase()))
 
       const isFullMatch = fullMatchToken(token)
 
