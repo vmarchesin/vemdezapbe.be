@@ -39,7 +39,7 @@ app.post(`/api/${version}`, (req, res) => {
     response.gemidao = "HÃÃÃÃÃÃNNN ÕÕÕÕHH ÕÕÕÕÕÕÃHHH ÃÃÃÃÃÃÃHNN"
   }
   
-  response.requestTime = Date.now() - xStart
+  response.requestTime = `${Date.now() - xStart}ms`
 
   res.send(response)
 })
