@@ -40,6 +40,8 @@ $(window).on("load", () => {
 })
 
 $(() => {
+  $('[data-toggle="tooltip"]').tooltip()
+
   $("#strength-slider").on("input change", e => {
     zapStrengthShow(e.target.value)
   })
@@ -58,6 +60,15 @@ $(() => {
     $.post("/api/v1.0", { zap, mood, strength }, res => {
       console.log("Texto zapeado com sucesso:", res)
       $("#text-box").val(res.zap)
+
+      $("#text-box").select()
+      document.execCommand("copy")
+
+      $("#text-box").attr({ "data-toggle": "tooltip", "title": "Zap copiado!" })
+      $("#text-box").tooltip("show")
+      setTimeout(() => $("#text-box").tooltip("hide"), 2000)
+      setTimeout(() => $("#text-box").tooltip("dispose"), 2500)
+
       if (res.gemidao) {
         new Audio("audio/gemidao.mp3").play()
       }
