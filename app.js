@@ -1,7 +1,8 @@
 const express = require("express")
 const fs = require("fs")
-const api = require(`${__dirname}/api`)
 const bodyParser = require("body-parser")
+const api = require(`${__dirname}/api`)
+const apiUtils = require(`${__dirname}/api/utils`)
 const version = fs.readFileSync(`${__dirname}/api/VERSION`, "utf-8")
 
 const app = express()
@@ -67,6 +68,13 @@ app.post(`/api/${version}/suggest`, (req, res) => {
   Object.keys(data).forEach(el => {
     if (data[el] instanceof Array) {
       data[el].forEach(emoji => {
+        const match = emoji.match(apiUtils.emojiParseRegEx_NotGlobal)
+        if (match) {
+          emoji = match[0]
+        } else {
+          return
+        }
+
         if (!suggestions[el]) {
           suggestions[el] = []
         }
