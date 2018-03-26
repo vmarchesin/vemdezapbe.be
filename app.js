@@ -19,7 +19,7 @@ app.get("/api", (req, res) => {
   res.send({ version })
 })
 
-app.post(`/api/${version}`, (req, res) => {
+app.post(`/api/${version}/zap`, (req, res) => {
   const xStart = Date.now()
   const data = req.body
   let params = {}
@@ -41,6 +41,46 @@ app.post(`/api/${version}`, (req, res) => {
   
   response.requestTime = `${Date.now() - xStart}ms`
 
+  res.send(response)
+})
+
+app.get(`/api/${version}/suggest`, (req, res) => {
+  const suggestions = JSON.parse(fs.readFileSync(`${__dirname}/api/db/suggestions.json`, "utf8"))
+  res.send({ version, suggestions })
+})
+
+app.post(`/api/${version}/suggest`, (req, res) => {
+  let data = req.body
+  let suggestions = JSON.parse(fs.readFileSync(`${__dirname}/api/db/suggestions.json`, "utf8"))
+  
+  if (!suggestions) {
+    suggestions = {}
+  }
+
+  if (typeof data !== "object" && !data.suggestions) {
+    res.send({ error: { code: 21, message: "invalid schema object" }, version })
+    return
+  }
+  
+  data = data.suggestions
+
+  Object.keys(data).forEach(el => {
+    if (data[el] instanceof Array) {
+      data[el].forEach(emoji => {
+        if (!suggestions[el]) {
+          suggestions[el] = []
+        }
+        if (suggestions[el].indexOf(emoji) === -1) {
+          suggestions[el].push(emoji)
+        } 
+      })
+    } else {
+      res.send({ error: { code: 22, message: "invalid schema array" }, version })
+    }
+  })
+  
+  fs.writeFileSync(`${__dirname}/api/db/suggestions.json`, JSON.stringify(suggestions))
+  let response = { version, success: true }
   res.send(response)
 })
 
