@@ -62,12 +62,11 @@ $(() => {
       $("#text-box").val(res.zap)
 
       $("#text-box").select()
-      document.execCommand("copy")
-
-      $("#text-box").attr({ "data-toggle": "tooltip", "title": "Zap copiado!" })
-      $("#text-box").tooltip("show")
-      setTimeout(() => $("#text-box").tooltip("hide"), 2000)
-      setTimeout(() => $("#text-box").tooltip("dispose"), 2500)
+      // document.execCommand("copy")
+      // $("#text-box").attr({ "data-toggle": "tooltip", "title": "Zap copiado!" })
+      // $("#text-box").tooltip("show")
+      // setTimeout(() => $("#text-box").tooltip("hide"), 2000)
+      // setTimeout(() => $("#text-box").tooltip("dispose"), 2500)
 
       if (res.gemidao) {
         new Audio("audio/gemidao.mp3").play()
