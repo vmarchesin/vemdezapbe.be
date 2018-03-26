@@ -1,4 +1,4 @@
-const tokens = require("./tokens.js")
+const tokens = require("./db/tokens.js")
 const utils = require("./utils.js")
 
 const isInvalidToken = token => {
