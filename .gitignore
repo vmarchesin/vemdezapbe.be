@@ -2,3 +2,4 @@
 /**/api/**/*.pyc
 
 /**/api/**/*.html
+/api/db/suggestions.json
