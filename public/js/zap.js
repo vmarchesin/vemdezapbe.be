@@ -1,10 +1,10 @@
-const zapEmojisPerStrength = [1, 2, 3, 4, 8]
+const zapEmojisPerStrength = [1, 2, 3, 4, 7]
 const emojiArray = {
-  angry: ["steaming", "skullandbones", "angry", "stop", "under18", "bomb", "bomb", "cursing"],
-  happy: ["crazy", "surprised", "sunglasses", "muscle", "lol", "okay", "okay", "top"],
-  sad: ["sad-sweat", "sad", "frowning", "confounded", "nervous", "crying", "crying", "disappointed"],
-  sassy: ["love-cat", "smirk", "crazy", "love-eyes", "love-eyes", "point-right", "okay", "kiss"],
-  sick: ["sick", "nausea", "weary", "sneezing", "bandage", "vomiting", "vomiting", "thermometer"]
+  angry: ["steaming", "skullandbones", "angry", "stop", "under18", "bomb", "cursing"],
+  happy: ["crazy", "surprised", "sunglasses", "muscle", "lol", "okay", "top"],
+  sad: ["sad-sweat", "sad", "frowning", "confounded", "nervous", "crying", "disappointed"],
+  sassy: ["love-cat", "smirk", "crazy", "love-eyes", "point-right", "okay", "kiss"],
+  sick: ["sick", "nausea", "weary", "sneezing", "bandage", "vomiting", "thermometer"],
 }
 const strengthTitleArray = [
   "Zap força fraca",
