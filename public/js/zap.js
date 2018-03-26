@@ -57,7 +57,7 @@ $(() => {
     const mood = $(".mood-button.active").data("mood")
     const strength = Number($("#strength-slider").val() + 1)
 
-    $.post("/api/v1.0", { zap, mood, strength }, res => {
+    $.post("/api/v1.0/zap", { zap, mood, strength }, res => {
       console.log("Texto zapeado com sucesso:", res)
       $("#text-box").val(res.zap)
 

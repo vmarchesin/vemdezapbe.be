@@ -46,15 +46,21 @@ app.post(`/api/${version}/zap`, (req, res) => {
 })
 
 app.get(`/api/${version}/suggest`, (req, res) => {
-  const suggestions = JSON.parse(fs.readFileSync(`${__dirname}/api/db/suggestions.json`, "utf8"))
+  let suggestions
+  try {
+    suggestions = JSON.parse(fs.readFileSync(`${__dirname}/api/db/suggestions.json`, "utf8"))
+  } catch (e) {
+    suggestions = {}
+  }
   res.send({ version, suggestions })
 })
 
 app.post(`/api/${version}/suggest`, (req, res) => {
   let data = req.body
-  let suggestions = JSON.parse(fs.readFileSync(`${__dirname}/api/db/suggestions.json`, "utf8"))
-  
-  if (!suggestions) {
+
+  try {
+    suggestions = JSON.parse(fs.readFileSync(`${__dirname}/api/db/suggestions.json`, "utf8"))
+  } catch (e) {
     suggestions = {}
   }
 
