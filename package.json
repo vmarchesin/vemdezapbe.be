@@ -18,6 +18,7 @@
   "homepage": "https://github.com/vmarchesin/vemdezapbe.be#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "emojionearea": "^3.4.1",
     "express": "^4.16.3"
   }
 }
