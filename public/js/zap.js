@@ -57,7 +57,19 @@ $(() => {
     const mood = $(".mood-button.active").data("mood")
     const strength = Number($("#strength-slider").val() + 1)
 
-    $.post("/api/v1.0/zap", { zap, mood, strength }, res => {
+    const rateLenArr = [5, 8, 15, Infinity]
+    const rateValArr = [0.95, 0.8, 0.7, 0.5]
+    const zapTokens = zap.split(" ").length
+    let rate
+    
+    for (let i = 0; i < rateLenArr.length; i++) {
+      if (zapTokens < rateLenArr[i]) {
+        rate = rateValArr[i]
+      }
+    }
+    rate = rate || 0.5 // just to be safe
+
+    $.post("/api/v1.0/zap", { zap, mood, strength, rate }, res => {
       console.log("Texto zapeado com sucesso:", res)
       $("#text-box").val(res.zap)
 
