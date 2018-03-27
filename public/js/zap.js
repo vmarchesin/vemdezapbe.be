@@ -41,6 +41,7 @@ $(window).on("load", () => {
 
 $(() => {
   $('[data-toggle="tooltip"]').tooltip()
+  $("#suggest-emoji").emojioneArea()
 
   $("#strength-slider").on("input change", e => {
     zapStrengthShow(e.target.value)
@@ -85,7 +86,7 @@ $(() => {
       }
 
       $("#zapshare button").removeClass("hidden")
-      // $(".collapse").collapse()
+      $(".collapse").collapse()
     })
   })
 
@@ -93,12 +94,13 @@ $(() => {
     const word = $("#suggest-word").val()
     let emojis = $("#suggest-emoji").val()
 
+    console.log({ word, emojis })
     $.ajax({
       url: "/api/v1.0/suggest",
       type: "POST",
-      data: { word, emojis },
+      data: JSON.stringify({ word, emojis }),
       contentType:"application/json; charset=utf-8",
-      dataType:"json",
+      // dataType:"json",
       success: () => {
         $(".collapse").collapse("hide")
         setTimeout(() => { $(".suggestion-box").remove() }, 1000)

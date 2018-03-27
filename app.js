@@ -36,7 +36,8 @@ app.post(`/api/${version}/zap`, (req, res) => {
   Object.assign(params, data.strength && { strength: data.strength })
   
   let response = { version, zap: api.zapinate(params) }
-  if (Math.floor(Math.random() * 100 + 1 ) >= 99) {
+
+  if (process.env.PORT && Math.floor(Math.random() * 100 + 1 ) >= 99) {//self-trolled too many times
     response.gemidao = "HÃÃÃÃÃÃNNN ÕÕÕÕHH ÕÕÕÕÕÕÃHHH ÃÃÃÃÃÃÃHNN"
   }
   
@@ -73,15 +74,18 @@ app.post(`/api/${version}/suggest`, (req, res) => {
     suggestions[data.word] = []
   }
   
-  const matches = data.emojis.match(apiUtils.emojiParseRegEx)  
-  matches.forEach(emoji => {
-    if (suggestions[data.word].indexOf(emoji) === -1) {
-      suggestions[data.word].push(emoji)
-    } 
-  })
-  
-  fs.writeFileSync(`${__dirname}/api/db/suggestions.json`, JSON.stringify(suggestions))
-  res.send({ version, success: true })
+  const matches = data.emojis.match(apiUtils.emojiParseRegEx)
+  if (matches) {
+    matches.forEach(emoji => {
+      if (suggestions[data.word].indexOf(emoji) === -1) {
+        suggestions[data.word].push(emoji)
+      } 
+    })
+    fs.writeFileSync(`${__dirname}/api/db/suggestions.json`, JSON.stringify(suggestions))
+    res.send({ version, success: true })
+  } else {
+    res.send({ version, error: { code: 23, message: "no emojis found" } })
+  }
 })
 
 const port = process.env.PORT || 5000

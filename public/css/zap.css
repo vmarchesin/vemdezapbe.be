@@ -132,7 +132,8 @@ footer {
 /* Input style */
 input[type="text"]{
   width: 100%;
-  border: 1px solid #075E54;
+  border: 1px solid #CCC;
+  text-align: center;
   outline: 0;
   padding: .2em .5em;
   border-radius: 2px;
