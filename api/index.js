@@ -43,6 +43,7 @@ const getTokenMatch = (isFullMatch, token) => {
 
 const zapinate = ({ zap, mood = "happy", rate = 0.5, strength = 3, toUpper = false }) => {
   if (Number.isInteger(strength)) {
+    strength = strength > 5 ? 5 : strength
     strength = [Math.floor(strength/2), strength]
   } else {
     strength = [1, 3]
