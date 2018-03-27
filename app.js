@@ -23,6 +23,7 @@ app.get("/api", (req, res) => {
 app.post(`/api/${version}/zap`, (req, res) => {
   const xStart = Date.now()
   const data = req.body
+
   let params = {}
   if (!data.zap) {
     res.send({ error: { code: 10, message: "zap property missing" }, version })

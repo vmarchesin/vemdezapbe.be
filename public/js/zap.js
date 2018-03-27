@@ -58,14 +58,15 @@ $(() => {
     const mood = $(".mood-button.active").data("mood")
     const strength = Number($("#strength-slider").val() + 1)
 
-    const rateLenArr = [5, 8, 15, Infinity]
-    const rateValArr = [0.95, 0.8, 0.7, 0.5]
+    const rateLenArr = [2, 5, 8, 15, Infinity]
+    const rateValArr = [1, 0.95, 0.8, 0.7, 0.5]
     const zapTokens = zap.split(" ").length
     let rate
     
     for (let i = 0; i < rateLenArr.length; i++) {
       if (zapTokens < rateLenArr[i]) {
         rate = rateValArr[i]
+        break
       }
     }
     rate = rate || 0.5 // just to be safe
