@@ -4,7 +4,7 @@ input[type=range] {
   margin: 10px 0;
   width: 100%;
   background-color: #FFFFFF00;
-  padding: 0px 25%;
+  padding: 0px 15%;
 }
 input[type=range]:focus {
   outline: none;
