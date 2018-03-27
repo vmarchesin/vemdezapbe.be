@@ -54,6 +54,12 @@ footer {
 }
 
 /* Styles */
+.suggestion-box {
+  border: 1px solid #075E54;
+  border-radius: 4px;
+  padding: 10px;
+}
+
 .clickable {
   cursor: pointer;
 }
@@ -94,6 +100,8 @@ footer {
   min-width: 90%;
   min-height: 100px;
   max-height: 500px;
+  resize: none;
+  overflow: auto;
 }
 
 #strength-show div {
@@ -119,6 +127,15 @@ footer {
 
 #ZAP:active {
   background-color: rgb(24, 143, 68);
+}
+
+/* Input style */
+input[type="text"]{
+  width: 100%;
+  border: 1px solid #075E54;
+  outline: 0;
+  padding: .2em .5em;
+  border-radius: 2px;
 }
 
 /* Helpers */

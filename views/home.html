@@ -122,7 +122,7 @@
             <textarea id="text-box" rows="10" placeholder="Cole seu texto para zapear aqui..."></textarea>
           </section>
 
-          <div class="row justify-content-center">
+          <section class="row justify-content-center">
             <button id="vemdezap" class="zap">
               Vem de ZAP
             </button>
@@ -132,10 +132,29 @@
                 Enviar pelo WhatsApp
               </button>
             </a>
-          </div>
+          </section>
+
+          <section class="row justify-content-center collapse suggestion-box mt20">
+            <div class="col-12">
+              <strong>Esqueci um emoji?</strong>
+            </div>
+            <div class="col-12">
+              <small>Sugira uma palavra e um ou mais emojis que deverão <br/>aparecer logo depois!</small>
+            </div>
+            <form id="suggest-form">
+              <div class="col-xs-12 col-sm-12 col-md-6 mb10">
+                <input type="text" id="suggest-word" placeholder="Palavra" required autocomplete="off" />
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <input type="text" id="suggest-emoji" placeholder="Emojis" required autocomplete="off" />
+              </div>
+              <button id="suggest" class="zap">
+                Sugerir
+              </button>
+            </form>
+          </section>
         </center>
       </div>
-   
     </div>
   </main>
 

@@ -63,39 +63,25 @@ app.post(`/api/${version}/suggest`, (req, res) => {
   } catch (e) {
     suggestions = {}
   }
-
-  if (typeof data !== "object" && !data.suggestions) {
+  
+  if (typeof data !== "object" || !data.word || !data.emojis) {
     res.send({ error: { code: 21, message: "invalid schema object" }, version })
     return
   }
   
-  data = data.suggestions
-
-  Object.keys(data).forEach(el => {
-    if (data[el] instanceof Array) {
-      data[el].forEach(emoji => {
-        const match = emoji.match(apiUtils.emojiParseRegEx_NotGlobal)
-        if (match) {
-          emoji = match[0]
-        } else {
-          return
-        }
-
-        if (!suggestions[el]) {
-          suggestions[el] = []
-        }
-        if (suggestions[el].indexOf(emoji) === -1) {
-          suggestions[el].push(emoji)
-        } 
-      })
-    } else {
-      res.send({ error: { code: 22, message: "invalid schema array" }, version })
-    }
+  if (!suggestions[data.word]) {
+    suggestions[data.word] = []
+  }
+  
+  const matches = data.emojis.match(apiUtils.emojiParseRegEx)  
+  matches.forEach(emoji => {
+    if (suggestions[data.word].indexOf(emoji) === -1) {
+      suggestions[data.word].push(emoji)
+    } 
   })
   
   fs.writeFileSync(`${__dirname}/api/db/suggestions.json`, JSON.stringify(suggestions))
-  let response = { version, success: true }
-  res.send(response)
+  res.send({ version, success: true })
 })
 
 const port = process.env.PORT || 5000

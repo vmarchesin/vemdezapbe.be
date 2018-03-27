@@ -63,17 +63,37 @@ $(() => {
 
       $("#text-box").select()
       // document.execCommand("copy")
-      // $("#text-box").attr({ "data-toggle": "tooltip", "title": "Zap copiado!" })
-      // $("#text-box").tooltip("show")
-      // setTimeout(() => $("#text-box").tooltip("hide"), 2000)
-      // setTimeout(() => $("#text-box").tooltip("dispose"), 2500)
+      $("#text-box").attr({ "data-toggle": "tooltip", "title": "Copie seu zap!" })
+      $("#text-box").tooltip("show")
+      setTimeout(() => $("#text-box").tooltip("hide"), 2000)
+      setTimeout(() => $("#text-box").tooltip("dispose"), 2500)
 
       if (res.gemidao) {
         new Audio("audio/gemidao.mp3").play()
       }
 
       $("#zapshare button").removeClass("hidden")
+      // $(".collapse").collapse()
     })
+  })
+
+  $("#suggest-form").on("submit", e => {
+    const word = $("#suggest-word").val()
+    let emojis = $("#suggest-emoji").val()
+
+    $.ajax({
+      url: "/api/v1.0/suggest",
+      type: "POST",
+      data: { word, emojis },
+      contentType:"application/json; charset=utf-8",
+      dataType:"json",
+      success: () => {
+        $(".collapse").collapse("hide")
+        setTimeout(() => { $(".suggestion-box").remove() }, 1000)
+      }
+    })
+    
+    e.preventDefault()
   })
 
   $("#zapshare").on("click", function() {
