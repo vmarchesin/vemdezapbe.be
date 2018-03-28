@@ -3,3 +3,5 @@
 
 /**/api/**/*.html
 /api/db/suggestions.json
+
+.env

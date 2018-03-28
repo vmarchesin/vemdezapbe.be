@@ -19,6 +19,13 @@ const twitter = new Twitter({
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
 })
 
+const tweetInterval = (30*60*1000) / 50 /* 50 tweets per 30m in ms */ 
+let canTweet = true
+
+setInterval(() => {
+  canTweet = true
+}, tweetInterval)
+
 app.use("/favicon.ico", express.static(`${__dirname}/public/images/favicon.ico`))
 
 app.get("/", (req, res) => {
@@ -50,17 +57,18 @@ app.post(`/api/${version}/zap`, (req, res) => {
   if (process.env.PORT && Math.floor(Math.random() * 100 + 1 ) >= 99) {//self-trolled too many times
     response.gemidao = "HÃÃÃÃÃÃNNN ÕÕÕÕHH ÕÕÕÕÕÕÃHHH ÃÃÃÃÃÃÃHNN"
   }
-
-  // if (data.tweet && response.zap.length < 280) {
-  //   const tweet = response.zap.replace(/\@/g, "")
-  //   twitter.post("statuses/update", {status: tweet}, (err, tweet, response) => {
-  //     if (!err) {
-  //       console.log(tweet)
-  //     } else {
-  //       console.log(err)
-  //     }
-  //   })
-  // }
+  
+  if (canTweet && data.tweet && response.zap.length < 280) {
+    canTweet = false
+    const tweet = response.zap.replace(/\@/g, "")
+    twitter.post("statuses/update", {status: tweet}, (err, tweet, response) => {
+      if (!err) {
+        console.log(tweet)
+      } else {
+        console.log(err)
+      }
+    })
+  }
   
   response.requestTime = `${Date.now() - xStart}ms`
 
