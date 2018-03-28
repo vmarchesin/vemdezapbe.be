@@ -13,21 +13,20 @@ A API REST pode ser encontrada em `http://vemdezapbe.be/api`. Os seguintes endop
 ### GET
 - `/api` - Retorna a versão mais recente da API. A versão atual é `v1.0`. Todas as chamadas da API retornam junto a versão atual.
 
-```JSON
+```javascript
 {
-  version: v1.0
+  version: "v1.0",
 }
 ```
 
 - `/api/v1.0/suggest` - Retorna todas as sugestões oferecidas pelos usuários.
 
-```JSON
+```javascript
 {
-  version: v1.0,
+  version: "v1.0",
   suggestions: { 
     "palavra": ["emoji"], 
     "palavra": ["emoji", "emoji"],
-    ... 
   },
 }
 ```
@@ -47,9 +46,9 @@ A API REST pode ser encontrada em `http://vemdezapbe.be/api`. Os seguintes endop
     - gemidao `string`: Gemidao em texto. Chance de 1% de ser retornado. Se retornado toca o gemidão no site.
     - requestTime `string`: Tempo de execução do servidor em ms. 
 
-```JSON
+```javascript
 {
-  version: v1.0,
+  version: "v1.0",
   zap: "Zapeia 😄 esse 😀☺😀 texto 👌😋😆 bb 👶",
   gemidao: "HÃÃÃÃÃÃNNN ÕÕÕÕHH ÕÕÕÕÕÕÃHHH ÃÃÃÃÃÃÃHNN",
   requestTime: "75ms",
@@ -66,9 +65,9 @@ A API REST pode ser encontrada em `http://vemdezapbe.be/api`. Os seguintes endop
   - Response:
     - success `boolean`: A sugestão foi recebida com sucesso.
 
-```JSON
+```javascript
 {
-  version: v1.0,
+  version: "v1.0",
   success: true,
 }
 ```
