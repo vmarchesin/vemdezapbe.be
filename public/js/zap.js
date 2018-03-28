@@ -112,6 +112,7 @@ $(() => {
   })
 
   $("#zapshare").on("click", function() {
-    this.href = `whatsapp://send?text=${encodeURI($("#text-box").val())}`
+    let zap = $("#text-box").val() + "\n\n Zapeado por http://vemdezapbe.be"
+    this.href = `whatsapp://send?text=${encodeURI(zap)}`
   })
 })
