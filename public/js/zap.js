@@ -43,6 +43,8 @@ $(() => {
   $('[data-toggle="tooltip"]').tooltip()
   $("#suggest-emoji").emojioneArea()
 
+  let tweet = true
+
   $("#strength-slider").on("input change", e => {
     zapStrengthShow(e.target.value)
   })
@@ -53,8 +55,17 @@ $(() => {
     zapStrengthShow($("#strength-slider").val())
   })
 
+  $("#text-box").on("input", function() {
+    if(tweet && $(this).val().length >= 280) {
+      $('#twitter-check').attr({ "checked": false, "disabled": true })
+    } else {
+      $('#twitter-check').attr("disabled", false)
+    }
+  })
+
   $("#vemdezap").on("click", () => {
     $.LoadingOverlay("show")
+  
     const zap = $("#text-box").val() || "Zapeia esse texto bb que vai ficar top demais"
     const mood = $(".mood-button.active").data("mood")
     const strength = Number($("#strength-slider").val() + 1)
@@ -71,9 +82,17 @@ $(() => {
       }
     }
     rate = rate || 0.5 // just to be safe
+    
+    if (!$('#twitter-check').is(":checked")) {
+      tweet = false
+    }
 
-    $.post("/api/v1.0/zap", { zap, mood, strength, rate }, res => {
+    $.post("/api/v1.0/zap", { zap, mood, strength, rate, tweet }, res => {
       console.log("Texto zapeado com sucesso:", res)
+      
+      tweet = false
+      $('#twitter-check').attr({ "checked": false, "disabled": true })
+      
       $("#text-box").val(res.zap)
 
       $.LoadingOverlay("hide", true)

@@ -139,6 +139,10 @@ input[type="text"]{
   border-radius: 2px;
 }
 
+input[type="checkbox"]{
+  vertical-align: middle;
+}
+
 /* Helpers */
 .align-middle {
   vertical-align: middle;

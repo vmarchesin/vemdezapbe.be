@@ -20,6 +20,7 @@
     "body-parser": "^1.18.2",
     "emojionearea": "^3.4.1",
     "express": "^4.16.3",
-    "gasparesganga-jquery-loading-overlay": "^2.0.2"
+    "gasparesganga-jquery-loading-overlay": "^2.0.2",
+    "twitter": "^1.7.1"
   }
 }
