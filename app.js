@@ -26,7 +26,8 @@ let tweetQueue = []
 setInterval(() => {
   console.log(tweetQueue)
   if (tweetQueue.length) {
-    twitter.post("statuses/update", {status: tweetQueue.shift()}, (err, tweet, response) => {
+    const tweet = tweetQueue.splice(Math.floor(Math.random()*tweetQueue.length), 1)[0]
+    twitter.post("statuses/update", {status: tweet}, (err, tweet, response) => {
       if (!err) {
         console.log(tweet)
       } else {
@@ -70,7 +71,8 @@ app.post(`/api/${version}/zap`, (req, res) => {
     response.gemidao = "HÃÃÃÃÃÃNNN ÕÕÕÕHH ÕÕÕÕÕÕÃHHH ÃÃÃÃÃÃÃHNN"
   }
   
-  if (canTweet && data.tweet && response.zap.length < 280) {
+  const validTweet = data.tweet && response.zap.length < 280
+  if (canTweet && validTweet) {
     canTweet = false
     const tweet = response.zap.replace(/\@/g, "")
     twitter.post("statuses/update", {status: tweet}, (err, tweet, response) => {
@@ -80,7 +82,7 @@ app.post(`/api/${version}/zap`, (req, res) => {
         console.log(err)
       }
     })
-  } else if (data.tweet && response.zap.length < 280) {
+  } else if (validTweet) {
     tweetQueue.push(response.zap.replace(/\@/g, ""))
   }
   
