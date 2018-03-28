@@ -21,9 +21,21 @@ const twitter = new Twitter({
 
 const tweetInterval = (30*60*1000) / 50 /* 50 tweets per 30m in ms */ 
 let canTweet = true
+let tweetQueue = []
 
 setInterval(() => {
-  canTweet = true
+  console.log(tweetQueue)
+  if (tweetQueue.length) {
+    twitter.post("statuses/update", {status: tweetQueue.shift()}, (err, tweet, response) => {
+      if (!err) {
+        console.log(tweet)
+      } else {
+        console.log(err)
+      }
+    })
+  } else {
+    canTweet = true
+  }
 }, tweetInterval)
 
 app.use("/favicon.ico", express.static(`${__dirname}/public/images/favicon.ico`))
@@ -68,6 +80,8 @@ app.post(`/api/${version}/zap`, (req, res) => {
         console.log(err)
       }
     })
+  } else if (data.tweet && response.zap.length < 280) {
+    tweetQueue.push(response.zap.replace(/\@/g, ""))
   }
   
   response.requestTime = `${Date.now() - xStart}ms`
