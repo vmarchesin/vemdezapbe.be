@@ -56,6 +56,8 @@ app.post(`/api/${version}/zap`, (req, res) => {
     twitter.post("statuses/update", {status: tweet}, (err, tweet, response) => {
       if (!err) {
         console.log(tweet)
+      } else {
+        console.log(err)
       }
     })
   }
