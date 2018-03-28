@@ -52,7 +52,8 @@ app.post(`/api/${version}/zap`, (req, res) => {
   }
 
   if (data.tweet && response.zap.length < 280) {
-    twitter.post("statuses/update", {status: response.zap}, (err, tweet, response) => {
+    const tweet = response.zap.replace(/\@/g, "")
+    twitter.post("statuses/update", {status: tweet}, (err, tweet, response) => {
       if (!err) {
         console.log(tweet)
       }
