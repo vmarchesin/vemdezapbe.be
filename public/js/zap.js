@@ -54,6 +54,7 @@ $(() => {
   })
 
   $("#vemdezap").on("click", () => {
+    $.LoadingOverlay("show")
     const zap = $("#text-box").val() || "Zapeia esse texto bb que vai ficar top demais"
     const mood = $(".mood-button.active").data("mood")
     const strength = Number($("#strength-slider").val() + 1)
@@ -75,6 +76,7 @@ $(() => {
       console.log("Texto zapeado com sucesso:", res)
       $("#text-box").val(res.zap)
 
+      $.LoadingOverlay("hide", true)
       $("#text-box").select()
       // document.execCommand("copy")
       $("#text-box").attr({ "data-toggle": "tooltip", "title": "Copie seu zap!" })
