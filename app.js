@@ -51,16 +51,16 @@ app.post(`/api/${version}/zap`, (req, res) => {
     response.gemidao = "HÃÃÃÃÃÃNNN ÕÕÕÕHH ÕÕÕÕÕÕÃHHH ÃÃÃÃÃÃÃHNN"
   }
 
-  if (data.tweet && response.zap.length < 280) {
-    const tweet = response.zap.replace(/\@/g, "")
-    twitter.post("statuses/update", {status: tweet}, (err, tweet, response) => {
-      if (!err) {
-        console.log(tweet)
-      } else {
-        console.log(err)
-      }
-    })
-  }
+  // if (data.tweet && response.zap.length < 280) {
+  //   const tweet = response.zap.replace(/\@/g, "")
+  //   twitter.post("statuses/update", {status: tweet}, (err, tweet, response) => {
+  //     if (!err) {
+  //       console.log(tweet)
+  //     } else {
+  //       console.log(err)
+  //     }
+  //   })
+  // }
   
   response.requestTime = `${Date.now() - xStart}ms`
 
