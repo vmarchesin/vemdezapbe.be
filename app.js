@@ -25,12 +25,12 @@ let tweetQueue = []
 
 setInterval(() => {
   console.log("canTweet: ", canTweet)
-  console.log("Tweets remaining: ", tweetQueue)
+  console.log("Tweets remaining: ", tweetQueue.length)
   if (tweetQueue.length) {
     const tweet = tweetQueue.splice(Math.floor(Math.random()*tweetQueue.length), 1)[0]
     twitter.post("statuses/update", {status: tweet}, (err, tweet, response) => {
       if (!err) {
-        console.log(tweet)
+        console.log("Tweet sent: ", tweet.text)
       } else {
         console.log(err)
       }
@@ -78,7 +78,7 @@ app.post(`/api/${version}/zap`, (req, res) => {
     const tweet = response.zap.replace(/\@/g, "")
     twitter.post("statuses/update", {status: tweet}, (err, tweet, response) => {
       if (!err) {
-        console.log(tweet)
+        console.log("Tweet sent: ", tweet.text)
       } else {
         console.log(err)
       }
