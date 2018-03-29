@@ -18,7 +18,7 @@ const removerAcentos = str => {
   return str
 }
 
-const cleanToken = text => text.replace(/[[\]{}()*+?.,"'\\^$|#\s]/g, "")
+const cleanToken = text => text.replace(/[[\]{}()*+!%@?.,"'\\^$|#\s]/g, "")
 
 const choices = (arr, n) => {
   let choices = []
