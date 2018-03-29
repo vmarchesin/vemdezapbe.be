@@ -68,6 +68,10 @@ footer {
   color: #212529;
 }
 
+.twitter:hover {
+  color: #1DA1F2;
+}
+
 .white {
   color: white;
 }

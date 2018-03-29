@@ -24,7 +24,8 @@ let canTweet = true
 let tweetQueue = []
 
 setInterval(() => {
-  console.log(tweetQueue)
+  console.log("canTweet: ", canTweet)
+  console.log("Tweets remaining: ", tweetQueue)
   if (tweetQueue.length) {
     const tweet = tweetQueue.splice(Math.floor(Math.random()*tweetQueue.length), 1)[0]
     twitter.post("statuses/update", {status: tweet}, (err, tweet, response) => {
