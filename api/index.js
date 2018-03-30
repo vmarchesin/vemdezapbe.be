@@ -7,7 +7,16 @@ const isInvalidToken = token => {
 
 const fullMatchToken = token => Object.keys(tokens.matchTokens.fullMatch).includes(token)
 
-const getTokenMatch = (isFullMatch, token) => {
+const fullAccentMatchToken = token => utils.hasAccent(token) && Object.keys(tokens.matchTokens.accentMatch).includes(token)
+
+const getTokenMatch = (isFullMatch, isFullAccentMatch, token) => {
+  console.log(token)
+  if (isFullAccentMatch) {
+    return tokens.matchTokens.accentMatch[token]
+  } else {
+    token = utils.removeAccent(token)
+  }
+
   if (isFullMatch) {
     return tokens.matchTokens.fullMatch[token]
   }
@@ -54,18 +63,19 @@ const zapinate = ({ zap, mood = "happy", rate = 0.5, strength = 3, toUpper = fal
   zap.split("\n").forEach(line => {
     line.replace(/\s+/g, " ").split(" ").forEach(token => {
       const originalToken = token
-      token = utils.cleanToken(utils.removerAcentos(token.toLowerCase()))
+      token = utils.cleanToken(token.toLowerCase())
 
-      const isFullMatch = fullMatchToken(token)
+      const isFullAccentMatch = fullAccentMatchToken(token)
+      const isFullMatch = !isFullAccentMatch && fullMatchToken(utils.removeAccent(token))
 
-      if (!isFullMatch && (token.length <= 2 || isInvalidToken(token))) {
+      if (!isFullMatch && !isFullAccentMatch && (token.length <= 2 || isInvalidToken(token))) {
         zapinated += `${originalToken} `
         return
       }
 
       if (Math.random() < rate) {
         let zapStrength = strength[Math.round(Math.random())]
-        let possibleEmojis = getTokenMatch(isFullMatch, token) || tokens.moodEmojis[mood]
+        let possibleEmojis = getTokenMatch(isFullMatch, isFullAccentMatch, token) || tokens.moodEmojis[mood]
         let chosenEmojis = utils.choices(possibleEmojis, zapStrength)
         zapinated += `${originalToken} ${chosenEmojis.join("")} `
       } else {
