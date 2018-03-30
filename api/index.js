@@ -10,7 +10,6 @@ const fullMatchToken = token => Object.keys(tokens.matchTokens.fullMatch).includ
 const fullAccentMatchToken = token => utils.hasAccent(token) && Object.keys(tokens.matchTokens.accentMatch).includes(token)
 
 const getTokenMatch = (isFullMatch, isFullAccentMatch, token) => {
-  console.log(token)
   if (isFullAccentMatch) {
     return tokens.matchTokens.accentMatch[token]
   } else {

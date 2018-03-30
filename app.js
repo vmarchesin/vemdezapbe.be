@@ -72,7 +72,8 @@ app.post(`/api/${version}/zap`, (req, res) => {
     response.gemidao = "HÃÃÃÃÃÃNNN ÕÕÕÕHH ÕÕÕÕÕÕÃHHH ÃÃÃÃÃÃÃHNN"
   }
   
-  const validTweet = data.tweet && response.zap.length < 280
+  const validTweet = data.tweet === "true" && (response.zap.length < 280) 
+
   if (canTweet && validTweet) {
     canTweet = false
     const tweet = response.zap.replace(/\@/g, "")
