@@ -2,6 +2,7 @@ const express = require("express")
 const fs = require("fs")
 const bodyParser = require("body-parser")
 const Twitter = require('twitter')
+const request = require("request")
 
 const api = require(`${__dirname}/api`)
 const apiUtils = require(`${__dirname}/api/utils`)
@@ -89,6 +90,27 @@ app.post(`/api/${version}/zap`, (req, res) => {
   }
   
   response.requestTime = `${Date.now() - xStart}ms`
+
+  request({
+    url: process.env.EDS_URL,
+    method: "POST",
+    headers: {
+      "token": process.env.EDS_TOKEN,
+    },
+    json: {
+      "message": data.zap,
+      "zap": response.zap,
+      "mood": data.mood || "happy",
+      "rate": data.rate || 0.5,
+      "strength": data.strength || 3,
+      "timestamp": new Date().toISOString(),
+      "tweet": data.tweet,
+    },
+  }, (e, r, b) => {
+    if (e) {
+      console.log(e)
+    }
+  })
 
   res.send(response)
 })
