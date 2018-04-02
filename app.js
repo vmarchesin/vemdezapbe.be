@@ -24,22 +24,47 @@ const tweetInterval = (30*60*1000) / 50 /* 50 tweets per 30m in ms */
 let canTweet = true
 let tweetQueue = []
 
+let canPostToFacebook = true
+let facebookQueue = []
+
 setInterval(() => {
   console.log("canTweet: ", canTweet)
   console.log("Tweets remaining: ", tweetQueue.length)
   if (tweetQueue.length) {
     const tweet = tweetQueue.splice(Math.floor(Math.random()*tweetQueue.length), 1)[0]
     twitter.post("statuses/update", {status: tweet}, (err, tweet, response) => {
-      if (!err) {
-        console.log("Tweet sent: ", tweet.text)
-      } else {
+      if (err) {
         console.log(err)
+        tweetQueue.push(tweet)
       }
     })
   } else {
     canTweet = true
   }
+
+  console.log("canPostToFacebook: ", canPostToFacebook)
+  console.log("Facebook Posts remaining: ", facebookQueue.length)
+  if (facebookQueue.length) {
+    const post = facebookQueue.splice(Math.floor(Math.random()*tweetQueue.length), 1)[0]
+    request({
+      url: `https://graph.facebook.com/${process.env.FACEBOOK_PAGE_ID}/feed`,
+      method: "POST",
+      json: {
+        "access_token": process.env.FACEBOOK_ACCESS_TOKEN,
+        "message": post,
+      },
+    }, (e, r, b) => {
+      if (e) {
+        console.log("FACEBOOK: ", e)
+        facebookQueue.push(post)
+      }
+    })
+  } else {
+    canPostToFacebook = true
+  }
 }, tweetInterval)
+
+
 
 app.use("/favicon.ico", express.static(`${__dirname}/public/images/favicon.ico`))
 
@@ -110,7 +135,8 @@ app.post(`/api/${version}/zap`, (req, res) => {
     }
   })
 
-  if (data.tweet === "true") {
+  if (data.tweet === "true" && canPostToFacebook) {
+    canPostToFacebook = false
     request({
       url: `https://graph.facebook.com/${process.env.FACEBOOK_PAGE_ID}/feed`,
       method: "POST",
@@ -123,6 +149,8 @@ app.post(`/api/${version}/zap`, (req, res) => {
         console.log("FACEBOOK: ", e)
       }
     })
+  } else if (data.tweet === "true") {
+    facebookQueue.push(response.zap)
   }
 
   res.send(response)
