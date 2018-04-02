@@ -64,6 +64,10 @@ footer {
   cursor: pointer;
 }
 
+.facebook:hover {
+  color: #3b5998;
+}
+
 .github:hover {
   color: #212529;
 }

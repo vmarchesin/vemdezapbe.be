@@ -79,10 +79,8 @@ app.post(`/api/${version}/zap`, (req, res) => {
     canTweet = false
     const tweet = response.zap.replace(/\@/g, "")
     twitter.post("statuses/update", {status: tweet}, (err, tweet, response) => {
-      if (!err) {
-        console.log("Tweet sent: ", tweet.text)
-      } else {
-        console.log(err)
+      if (err) {
+        console.log("TWITTER: ", err)
       }
     })
   } else if (validTweet) {
@@ -108,9 +106,24 @@ app.post(`/api/${version}/zap`, (req, res) => {
     },
   }, (e, r, b) => {
     if (e) {
-      console.log(e)
+      console.log("EDS: ", e)
     }
   })
+
+  if (data.tweet === "true") {
+    request({
+      url: `https://graph.facebook.com/${process.env.FACEBOOK_PAGE_ID}/feed`,
+      method: "POST",
+      json: {
+        "access_token": process.env.FACEBOOK_ACCESS_TOKEN,
+        "message": response.zap,
+      },
+    }, (e, r, b) => {
+      if (e) {
+        console.log("FACEBOOK: ", e)
+      }
+    })
+  }
 
   res.send(response)
 })
