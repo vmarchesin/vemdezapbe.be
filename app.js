@@ -101,10 +101,10 @@ app.post(`/api/${version}/zap`, (req, res) => {
       "message": data.zap,
       "zap": response.zap,
       "mood": data.mood || "happy",
-      "rate": data.rate || 0.5,
-      "strength": data.strength || 3,
+      "rate": Number(data.rate) || 0.5,
+      "strength": Number(data.strength) || 3,
       "timestamp": new Date().toISOString(),
-      "tweet": data.tweet,
+      "tweet": data.tweet === "true",
     },
   }, (e, r, b) => {
     if (e) {
