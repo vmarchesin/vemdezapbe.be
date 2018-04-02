@@ -36,6 +36,8 @@ setInterval(() => {
       if (err) {
         console.log(err)
         tweetQueue.push(tweet)
+      } else {
+        console.log("Posted to Twitter")
       }
     })
   } else {
@@ -57,6 +59,8 @@ setInterval(() => {
       if (e) {
         console.log("FACEBOOK: ", e)
         facebookQueue.push(post)
+      } else if (b.error) {
+        console.log("FACEBOOK: ", b)
       }
     })
   } else {
@@ -106,6 +110,8 @@ app.post(`/api/${version}/zap`, (req, res) => {
     twitter.post("statuses/update", {status: tweet}, (err, tweet, response) => {
       if (err) {
         console.log("TWITTER: ", err)
+      } else {
+        console.log("Posted to Twitter")
       }
     })
   } else if (validTweet) {
@@ -147,6 +153,8 @@ app.post(`/api/${version}/zap`, (req, res) => {
     }, (e, r, b) => {
       if (e) {
         console.log("FACEBOOK: ", e)
+      } else if (b.error) {
+        console.log("FACEBOOK: ", b)
       }
     })
   } else if (data.tweet === "true") {
