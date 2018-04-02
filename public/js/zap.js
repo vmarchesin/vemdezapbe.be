@@ -40,7 +40,7 @@ $(window).on("load", () => {
   }
 
   Object.values(emojiArray).forEach(arr => {
-    $(arr.map(emoji => `images/emojis/${emoji}.png`)).preload()
+    $(arr.map(emoji => `images/emojis/${emoji}.png?v=1.1.0`)).preload()
   })
 })
 
