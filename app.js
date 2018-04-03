@@ -64,6 +64,8 @@ setInterval(() => {
         facebookQueue.push(post)
       } else if (b.error) {
         console.log("FACEBOOK: ", b)
+      } else {
+        console.log("Posted to Facebook")
       }
     })
   } else {
@@ -157,13 +159,16 @@ app.post(`/api/${version}/zap`, (req, res) => {
         console.log("FACEBOOK: ", e)
       } else if (b.error) {
         console.log("FACEBOOK: ", b)
+      } else {
+        console.log("Posted to Facebook")
       }
     })
   } else if (data.tweet === "true" && validRate) {
     facebookQueue.push(response.zap)
-  }
+  } 
 
   console.log(`ZAP ${data.tweet === "true" ? "COM POST" : "SEM POST"}`)
+  console.log(data.zap)
   res.send(response)
 })
 

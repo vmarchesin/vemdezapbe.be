@@ -58,14 +58,6 @@ $(() => {
     zapStrengthShow($("#strength-slider").val())
   })
 
-  $("#text-box").on("input", function() {
-    if($(this).val().length >= 280) {
-      $('#twitter-check').attr({ "checked": false, "disabled": true })
-    } else {
-      $('#twitter-check').attr("disabled", false)
-    }
-  })
-
   $("#vemdezap").on("click", () => {
     $.LoadingOverlay("show")
   
