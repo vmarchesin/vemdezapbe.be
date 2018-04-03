@@ -24,6 +24,7 @@ const tweetInterval = (30*60*1000) / 50 /* 50 tweets per 30m in ms */
 let canTweet = true
 let tweetQueue = []
 
+const facebookInterval = (30*60*1000) / 15 /* 15 tweets per 30m in ms */ 
 let canPostToFacebook = true
 let facebookQueue = []
 
@@ -43,7 +44,9 @@ setInterval(() => {
   } else {
     canTweet = true
   }
+}, tweetInterval)
 
+setTimeout(() => {
   console.log("canPostToFacebook: ", canPostToFacebook)
   console.log("Facebook Posts remaining: ", facebookQueue.length)
   if (facebookQueue.length) {
@@ -66,9 +69,7 @@ setInterval(() => {
   } else {
     canPostToFacebook = true
   }
-}, tweetInterval)
-
-
+}, facebookInterval)
 
 app.use("/favicon.ico", express.static(`${__dirname}/public/images/favicon.ico`))
 
