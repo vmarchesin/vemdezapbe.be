@@ -106,9 +106,9 @@ app.post(`/api/${version}/zap`, (req, res) => {
   }
   
   const validTweet = data.tweet === "true" && (response.zap.length < 280) 
-  const validRate = data.rate === undefined || Number(data.rate) >= 0.3
+  const validPost = req.headers["user-agent"].match("Mozilla") && (data.rate === undefined || Number(data.rate) >= 0.3)
 
-  if (canTweet && validTweet && validRate) {
+  if (canTweet && validTweet && validPost) {
     canTweet = false
     const tweet = response.zap.replace(/\@/g, "")
     twitter.post("statuses/update", {status: tweet}, (err, tweet, response) => {
@@ -118,11 +118,9 @@ app.post(`/api/${version}/zap`, (req, res) => {
         console.log("Posted to Twitter")
       }
     })
-  } else if (validTweet && validRate) {
+  } else if (validTweet && validPost) {
     tweetQueue.push(response.zap.replace(/\@/g, ""))
   }
-  
-  response.requestTime = `${Date.now() - xStart}ms`
 
   request({
     url: process.env.EDS_URL,
@@ -145,7 +143,7 @@ app.post(`/api/${version}/zap`, (req, res) => {
     }
   })
 
-  if (data.tweet === "true" && canPostToFacebook && validRate) {
+  if (data.tweet === "true" && canPostToFacebook && validPost) {
     canPostToFacebook = false
     request({
       url: `https://graph.facebook.com/${process.env.FACEBOOK_PAGE_ID}/feed`,
@@ -163,12 +161,15 @@ app.post(`/api/${version}/zap`, (req, res) => {
         console.log("Posted to Facebook")
       }
     })
-  } else if (data.tweet === "true" && validRate) {
+  } else if (data.tweet === "true" && validPost) {
     facebookQueue.push(response.zap)
   } 
 
   console.log(`ZAP ${data.tweet === "true" ? "COM POST" : "SEM POST"}`)
   console.log(data.zap)
+
+  response.requestTime = `${Date.now() - xStart}ms`
+  
   res.send(response)
 })
 
