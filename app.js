@@ -104,8 +104,9 @@ app.post(`/api/${version}/zap`, (req, res) => {
   }
   
   const validTweet = data.tweet === "true" && (response.zap.length < 280) 
+  const validRate = data.rate === undefined || Number(data.rate) >= 0.3
 
-  if (canTweet && validTweet) {
+  if (canTweet && validTweet && validRate) {
     canTweet = false
     const tweet = response.zap.replace(/\@/g, "")
     twitter.post("statuses/update", {status: tweet}, (err, tweet, response) => {
@@ -115,7 +116,7 @@ app.post(`/api/${version}/zap`, (req, res) => {
         console.log("Posted to Twitter")
       }
     })
-  } else if (validTweet) {
+  } else if (validTweet && validRate) {
     tweetQueue.push(response.zap.replace(/\@/g, ""))
   }
   
@@ -142,7 +143,7 @@ app.post(`/api/${version}/zap`, (req, res) => {
     }
   })
 
-  if (data.tweet === "true" && canPostToFacebook) {
+  if (data.tweet === "true" && canPostToFacebook && validRate) {
     canPostToFacebook = false
     request({
       url: `https://graph.facebook.com/${process.env.FACEBOOK_PAGE_ID}/feed`,
@@ -158,7 +159,7 @@ app.post(`/api/${version}/zap`, (req, res) => {
         console.log("FACEBOOK: ", b)
       }
     })
-  } else if (data.tweet === "true") {
+  } else if (data.tweet === "true" && validRate) {
     facebookQueue.push(response.zap)
   }
 
