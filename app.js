@@ -24,7 +24,7 @@ const tweetInterval = (30*60*1000) / 50 /* 50 tweets per 30m in ms */
 let canTweet = true
 let tweetQueue = []
 
-const facebookInterval = (30*60*1000) / 15 /* 15 tweets per 30m in ms */ 
+const facebookInterval = (30*60*1000) / 15 /* 50 posts per 30m in ms */ 
 let canPostToFacebook = true
 let facebookQueue = []
 
@@ -46,7 +46,7 @@ setInterval(() => {
   }
 }, tweetInterval)
 
-setTimeout(() => {
+setInterval(() => {
   console.log("canPostToFacebook: ", canPostToFacebook)
   console.log("Facebook Posts remaining: ", facebookQueue.length)
   if (facebookQueue.length) {
@@ -162,6 +162,7 @@ app.post(`/api/${version}/zap`, (req, res) => {
     facebookQueue.push(response.zap)
   }
 
+  console.log(`ZAP ${data.tweet === "true" ? "COM POST" : "SEM POST"}`)
   res.send(response)
 })
 
