@@ -16,7 +16,11 @@ const strengthTitleArray = [
 const randomZapArray = [
   "Zapeia esse texto bb que vai ficar top demais",
   "Agora Pabllo Vittar foi longe demais!",
-  "A REDE GLOBO VAI TROCAR O CRISTO REDENTOR POR UMA ESTÁTUA DO PABLLO VITTAR"
+  "A REDE GLOBO VAI TROCAR O CRISTO REDENTOR POR UMA ESTÁTUA DO PABLLO VITTAR",
+  "Levanta a cabeça, princesa, senão a coroa cai",
+  "Bom dia grupo vocês já vieram de zap hoje???",
+  "E aí gata, se eu for correndo vc vem de zap?",
+  "Fora Temer, Fora Lula, Fora Dilma, fora todo mundo! Eu quero é o meteoro!"
 ]
 
 const zapStrengthShow = value => {
