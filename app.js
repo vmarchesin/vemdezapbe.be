@@ -20,20 +20,16 @@ const twitter = new Twitter({
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
 })
 
-const tweetInterval = (30*60*1000) / 50 /* 50 tweets per 30m in ms */ 
+const tweetInterval = (30 * 60 * 1000) / 50 /* 50 tweets per 30m in ms */
 let canTweet = true
 let tweetQueue = []
-
-const facebookInterval = (30*60*1000) / 15 /* 50 posts per 30m in ms */ 
-let canPostToFacebook = true
-let facebookQueue = []
 
 setInterval(() => {
   console.log("canTweet: ", canTweet)
   console.log("Tweets remaining: ", tweetQueue.length)
   if (tweetQueue.length) {
-    const tweet = tweetQueue.splice(Math.floor(Math.random()*tweetQueue.length), 1)[0]
-    twitter.post("statuses/update", {status: tweet}, (err, tweet, response) => {
+    const tweet = tweetQueue.splice(Math.floor(Math.random() * tweetQueue.length), 1)[0]
+    twitter.post("statuses/update", { status: tweet }, (err, tweet, response) => {
       if (err) {
         console.log(err)
         tweetQueue.push(tweet)
@@ -45,33 +41,6 @@ setInterval(() => {
     canTweet = true
   }
 }, tweetInterval)
-
-setInterval(() => {
-  console.log("canPostToFacebook: ", canPostToFacebook)
-  console.log("Facebook Posts remaining: ", facebookQueue.length)
-  if (facebookQueue.length) {
-    const post = facebookQueue.splice(Math.floor(Math.random()*tweetQueue.length), 1)[0]
-    request({
-      url: `https://graph.facebook.com/${process.env.FACEBOOK_PAGE_ID}/feed`,
-      method: "POST",
-      json: {
-        "access_token": process.env.FACEBOOK_ACCESS_TOKEN,
-        "message": post,
-      },
-    }, (e, r, b) => {
-      if (e) {
-        console.log("FACEBOOK: ", e)
-        facebookQueue.push(post)
-      } else if (b.error) {
-        console.log("FACEBOOK: ", b)
-      } else {
-        console.log("Posted to Facebook")
-      }
-    })
-  } else {
-    canPostToFacebook = true
-  }
-}, facebookInterval)
 
 app.use("/favicon.ico", express.static(`${__dirname}/public/images/favicon.ico`))
 
@@ -98,22 +67,22 @@ app.post(`/api/${version}/zap`, (req, res) => {
   Object.assign(params, data.mood && { mood: data.mood })
   Object.assign(params, data.rate && { rate: data.rate })
   Object.assign(params, data.strength && { strength: data.strength })
-  
+
   let response = { version, zap: api.zapinate(params) }
 
-  if (process.env.PORT && Math.floor(Math.random() * 100 + 1 ) >= 99) {//self-trolled too many times
+  if (process.env.PORT && Math.floor(Math.random() * 100 + 1) >= 99) { //self-trolled too many times
     response.gemidao = "HÃÃÃÃÃÃNNN ÕÕÕÕHH ÕÕÕÕÕÕÃHHH ÃÃÃÃÃÃÃHNN"
   }
-  
-  const validTweet = data.tweet === "true" && (response.zap.length < 280) 
+
+  const validTweet = data.tweet === "true" && (response.zap.length < 280)
   const validPost = req.headers["user-agent"].match("Mozilla") && (data.rate === undefined || Number(data.rate) >= 0.3)
 
   if (canTweet && validTweet && validPost) {
     canTweet = false
     const tweet = response.zap.replace(/\@/g, "")
-    twitter.post("statuses/update", {status: tweet}, (err, tweet, response) => {
+    twitter.post("statuses/update", { status: tweet }, (err, tweet, response) => {
       if (err) {
-        console.log("TWITTER: ", err)
+        console.log("TWITTER ERROR: ", err)
       } else {
         console.log("Posted to Twitter")
       }
@@ -122,54 +91,11 @@ app.post(`/api/${version}/zap`, (req, res) => {
     tweetQueue.push(response.zap.replace(/\@/g, ""))
   }
 
-  request({
-    url: process.env.EDS_URL,
-    method: "POST",
-    headers: {
-      "token": process.env.EDS_TOKEN,
-    },
-    json: {
-      "message": data.zap,
-      "zap": response.zap,
-      "mood": data.mood || "happy",
-      "rate": Number(data.rate) || 0.5,
-      "strength": Number(data.strength) || 3,
-      "timestamp": new Date().toISOString(),
-      "tweet": data.tweet === "true",
-    },
-  }, (e, r, b) => {
-    if (e) {
-      console.log("EDS: ", e)
-    }
-  })
-
-  if (data.tweet === "true" && canPostToFacebook && validPost) {
-    canPostToFacebook = false
-    request({
-      url: `https://graph.facebook.com/${process.env.FACEBOOK_PAGE_ID}/feed`,
-      method: "POST",
-      json: {
-        "access_token": process.env.FACEBOOK_ACCESS_TOKEN,
-        "message": response.zap,
-      },
-    }, (e, r, b) => {
-      if (e) {
-        console.log("FACEBOOK: ", e)
-      } else if (b.error) {
-        console.log("FACEBOOK: ", b)
-      } else {
-        console.log("Posted to Facebook")
-      }
-    })
-  } else if (data.tweet === "true" && validPost) {
-    facebookQueue.push(response.zap)
-  } 
-
   console.log(`ZAP ${data.tweet === "true" ? "COM POST" : "SEM POST"}`)
-  console.log(data.zap)
+  // console.log(data.zap)
 
   response.requestTime = `${Date.now() - xStart}ms`
-  
+
   res.send(response)
 })
 
@@ -191,22 +117,22 @@ app.post(`/api/${version}/suggest`, (req, res) => {
   } catch (e) {
     suggestions = {}
   }
-  
+
   if (typeof data !== "object" || !data.word || !data.emojis) {
     res.send({ error: { code: 21, message: "invalid schema object" }, version })
     return
   }
-  
+
   if (!suggestions[data.word]) {
     suggestions[data.word] = []
   }
-  
+
   const matches = data.emojis.match(apiUtils.emojiParseRegEx)
   if (matches) {
     matches.forEach(emoji => {
       if (suggestions[data.word].indexOf(emoji) === -1) {
         suggestions[data.word].push(emoji)
-      } 
+      }
     })
     fs.writeFileSync(`${__dirname}/api/db/suggestions.json`, JSON.stringify(suggestions))
     res.send({ version, success: true })
