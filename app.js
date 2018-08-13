@@ -74,8 +74,12 @@ app.post(`/api/${version}/zap`, (req, res) => {
     response.gemidao = "HÃÃÃÃÃÃNNN ÕÕÕÕHH ÕÕÕÕÕÕÃHHH ÃÃÃÃÃÃÃHNN"
   }
 
+  const userAgent = req.headers["user-agent"]
+
   const validTweet = data.tweet === "true" && (response.zap.length < 280)
-  const validPost = req.headers["user-agent"].match("Mozilla") && (data.rate === undefined || Number(data.rate) >= 0.3)
+  const validUserAgent = userAgent ? userAgent.match("Mozilla") : false
+  const validRate = data.rate === undefined || Number(data.rate) >= 0.3
+  const validPost = validUserAgent && validRate
 
   if (canTweet && validTweet && validPost) {
     canTweet = false
