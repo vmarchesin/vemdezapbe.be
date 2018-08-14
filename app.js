@@ -74,14 +74,9 @@ app.post(`/api/${version}/zap`, (req, res) => {
     response.gemidao = "HÃÃÃÃÃÃNNN ÕÕÕÕHH ÕÕÕÕÕÕÃHHH ÃÃÃÃÃÃÃHNN"
   }
 
-  const userAgent = req.headers["user-agent"]
-
-  const validTweet = data.tweet === "true" && (response.zap.length < 280)
-  const validUserAgent = userAgent ? userAgent.match("Mozilla") : false
   const validRate = data.rate === undefined || Number(data.rate) >= 0.3
-  const validPost = validUserAgent && validRate
 
-  if (canTweet && validTweet && validPost) {
+  if (canTweet && validTweet && validRate) {
     canTweet = false
     const tweet = response.zap.replace(/\@/g, "")
     twitter.post("statuses/update", { status: tweet }, (err, tweet, response) => {
@@ -91,7 +86,7 @@ app.post(`/api/${version}/zap`, (req, res) => {
         console.log("Posted to Twitter")
       }
     })
-  } else if (validTweet && validPost) {
+  } else if (validTweet) {
     tweetQueue.push(response.zap.replace(/\@/g, ""))
   }
 
