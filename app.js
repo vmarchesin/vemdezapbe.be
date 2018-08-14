@@ -74,6 +74,7 @@ app.post(`/api/${version}/zap`, (req, res) => {
     response.gemidao = "HÃÃÃÃÃÃNNN ÕÕÕÕHH ÕÕÕÕÕÕÃHHH ÃÃÃÃÃÃÃHNN"
   }
 
+  const validTweet = data.tweet === "true" && (response.zap.length < 280)
   const validRate = data.rate === undefined || Number(data.rate) >= 0.3
 
   if (canTweet && validTweet && validRate) {
@@ -86,7 +87,7 @@ app.post(`/api/${version}/zap`, (req, res) => {
         console.log("Posted to Twitter")
       }
     })
-  } else if (validTweet) {
+  } else if (validTweet && validRate) {
     tweetQueue.push(response.zap.replace(/\@/g, ""))
   }
 
