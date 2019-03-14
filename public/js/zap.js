@@ -35,6 +35,11 @@ const zapStrengthShow = value => {
   $("#strength-show").html(finalZap)
 }
 
+const pushEventToDataLayer = event => {
+  window.dataLayer = window.dataLayer || []
+  window.dataLayer.push(event)
+}
+
 $(window).on("load", () => {
   // Preload images
   $.fn.preload = function() {
@@ -49,6 +54,10 @@ $(window).on("load", () => {
 })
 
 $(() => {
+  pushEventToDataLayer({
+    event: 'vemdezap-button-click',
+  });
+
   $('[data-toggle="tooltip"]').tooltip()
   $("#suggest-emoji").emojioneArea()
 
@@ -64,7 +73,7 @@ $(() => {
 
   $("#vemdezap").on("click", () => {
     $.LoadingOverlay("show")
-  
+
     const zap = $("#text-box").val() || randomZapArray[Math.floor(Math.random()*randomZapArray.length)]
     const mood = $(".mood-button.active").data("mood")
     const strength = Number($("#strength-slider").val() + 1)
@@ -73,7 +82,7 @@ $(() => {
     const rateValArr = [1, 0.95, 0.8, 0.7, 0.5, 0.45]
     const zapTokens = zap.split(" ").length
     let rate
-    
+
     for (let i = 0; i < rateLenArr.length; i++) {
       if (zapTokens < rateLenArr[i]) {
         rate = rateValArr[i]
@@ -81,15 +90,26 @@ $(() => {
       }
     }
     rate = rate || 0.5 // just to be safe
-    
+
     let tweet = $('#twitter-check').is(":checked")
-    console.log(tweet)
+
     $.post("/api/v1.0/zap", { zap, mood, strength, rate, tweet }, res => {
       console.log("Texto zapeado com sucesso:", res)
-      
+      pushEventToDataLayer({
+        event: 'vemdezap-success',
+        zap,
+        mood,
+      });
+
+      if (tweet) {
+        pushEventToDataLayer({
+          event: 'vemdezap-tweet',
+        });
+      }
+
       $("#twitter-check").attr("checked", false).hide()
       $("#twitter-label").html("Você pode zapear seu texto novamente para mais emojis!")
-      
+
       $("#text-box").val(res.zap)
 
       $.LoadingOverlay("hide", true)
@@ -105,31 +125,14 @@ $(() => {
       }
 
       $("#zapshare button").removeClass("hidden")
-      $(".collapse").collapse()
     })
-  })
-
-  $("#suggest-form").on("submit", e => {
-    const word = $("#suggest-word").val()
-    let emojis = $("#suggest-emoji").val()
-
-    console.log({ word, emojis })
-    $.ajax({
-      url: "/api/v1.0/suggest",
-      type: "POST",
-      data: JSON.stringify({ word, emojis }),
-      contentType:"application/json; charset=utf-8",
-      // dataType:"json",
-      success: () => {
-        $(".collapse").collapse("hide")
-        setTimeout(() => { $(".suggestion-box").remove() }, 1000)
-      }
-    })
-    
-    e.preventDefault()
   })
 
   $("#zapshare").on("click", function() {
+    pushEventToDataLayer({
+      event: 'vemdezap-share',
+    })
+
     let zap = $("#text-box").val() + "\n\n Zapeado por http://vemdezapbe.be"
     this.href = `whatsapp://send?text=${encodeURI(zap)}`
   })

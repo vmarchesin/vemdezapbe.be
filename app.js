@@ -99,48 +99,6 @@ app.post(`/api/${version}/zap`, (req, res) => {
   res.send(response)
 })
 
-app.get(`/api/${version}/suggest`, (req, res) => {
-  let suggestions
-  try {
-    suggestions = JSON.parse(fs.readFileSync(`${__dirname}/api/db/suggestions.json`, "utf8"))
-  } catch (e) {
-    suggestions = {}
-  }
-  res.send({ version, suggestions })
-})
-
-app.post(`/api/${version}/suggest`, (req, res) => {
-  let data = req.body
-
-  try {
-    suggestions = JSON.parse(fs.readFileSync(`${__dirname}/api/db/suggestions.json`, "utf8"))
-  } catch (e) {
-    suggestions = {}
-  }
-
-  if (typeof data !== "object" || !data.word || !data.emojis) {
-    res.send({ error: { code: 21, message: "invalid schema object" }, version })
-    return
-  }
-
-  if (!suggestions[data.word]) {
-    suggestions[data.word] = []
-  }
-
-  const matches = data.emojis.match(apiUtils.emojiParseRegEx)
-  if (matches) {
-    matches.forEach(emoji => {
-      if (suggestions[data.word].indexOf(emoji) === -1) {
-        suggestions[data.word].push(emoji)
-      }
-    })
-    fs.writeFileSync(`${__dirname}/api/db/suggestions.json`, JSON.stringify(suggestions))
-    res.send({ version, success: true })
-  } else {
-    res.send({ version, error: { code: 23, message: "no emojis found" } })
-  }
-})
-
 const port = process.env.PORT || 5000
 app.listen(port, function () {
   console.log(`Zapinating on port ${port}!`)
