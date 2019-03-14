@@ -1,58 +1,4 @@
-/** We will need this
-*   http://unicode.org/emoji/charts/full-emoji-list.html
-*   http://www.palavras.net/
-*/
-
-const discardTokens = [ 
-  "ainda",
-  "antes",
-  "apenas",
-  "apesar",
-  "assim",
-  "ate",
-  "cada",
-  "como",
-  "conforme",
-  "consoante",
-  "contudo",
-  "depois",
-  "desde",
-  "ele",
-  "ela",
-  "embora",
-  "enquanto",
-  "entanto",
-  "entao",
-  "entretanto",
-  "essa",
-  "esse",
-  "isso",
-  "logo",
-  "mal",
-  "mas",
-  "mesmo",
-  "modo",
-  "nem",
-  "obstante",
-  "ora",
-  "para",
-  "pois",
-  "por",
-  "porem",
-  "porque",
-  "portanto",
-  "posto",
-  "qual",
-  "quando",
-  "quanto",
-  "que",
-  "salvo",
-  "sem",
-  "também",
-  "todavia",
-]
-
-const matchTokens = {
+module.exports = {
   accentMatch: {
     "abençoado": ["🙏"],
     "bebê": ["👶", "😍", "😂", "😜", "💘"],
@@ -491,7 +437,7 @@ const matchTokens = {
       "cozinh": ["👨‍🍳", "👩‍🍳"],
       "juiz": ["👨‍⚖️", "👩‍⚖️", "⚖"],
       "medic": ["👨‍⚕️", "👩‍⚕️", "⚕"],
-      "pilot": ["👨‍✈️", "👩‍✈️"], 
+      "pilot": ["👨‍✈️", "👩‍✈️"],
       "policia": ["🚨", "🚔", "🚓", "👮‍♂️", "👮‍♀️", "🔫"],
       "professor": ["👨‍🏫", "👩‍🏫"],
       /* Signos */
@@ -517,18 +463,4 @@ const matchTokens = {
       "trov": ["🌩"],
     },
   },
-}
-
-const moodEmojis = {
-  "angry": ["😤","😤💦","😖","🙁","😩","😦","😡","🤬","💣","💢","✋🛑","☠"],
-  "happy": ["😀","😁","😂","😃","😄","😅","😆","😉","😊","😋","😎","☺","😛","😜","😝","👌"],
-  "sad": ["☹","🙁","😖","😞","😟","😢","😭","😭","😭","😩","😿"],
-  "sassy": ["😉","😎","😋","😘","😏","😜","😈","😻","🙊","👉👌","😼"],
-  "sick": ["😷","🤒","🤕","🤢","🤮","🤧"],
-}
-
-module.exports = {
-  discardTokens,
-  matchTokens,
-  moodEmojis,
-}
+};

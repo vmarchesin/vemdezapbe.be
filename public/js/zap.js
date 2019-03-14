@@ -20,15 +20,15 @@ const randomZapArray = [
   "Levanta a cabeça, princesa, senão a coroa cai",
   "Bom dia grupo vocês já vieram de zap hoje???",
   "E aí gata, se eu for correndo vc vem de zap?",
-  "Fora Temer, Fora Lula, Fora Dilma, fora todo mundo! Eu quero é o meteoro!"
-]
+  "Porque tem mais é que se fuder e acabou, tá okei?",
+];
 
 const zapStrengthShow = value => {
   const mood = $(".mood-button.active").data("mood")
   const finalZap = `
     <div class="mb10">${strengthTitleArray[value]}</div>
     ${emojiArray[mood].slice(0, zapEmojisPerStrength[value]).map(
-      emoji => `<img class="emoji" src="images/emojis/${emoji}.png" alt="${emoji}"/>`
+      emoji => `<img class="emoji" src="public/images/emojis/${emoji}.png" alt="${emoji}"/>`
     ).join(" ")}
   `
 
@@ -44,7 +44,7 @@ $(window).on("load", () => {
   }
 
   Object.values(emojiArray).forEach(arr => {
-    $(arr.map(emoji => `images/emojis/${emoji}.png?v=1.1.0`)).preload()
+    $(arr.map(emoji => `public/images/emojis/${emoji}.png?v=1.1.0`)).preload()
   })
 })
 
@@ -64,7 +64,7 @@ $(() => {
 
   $("#vemdezap").on("click", () => {
     $.LoadingOverlay("show")
-  
+
     const zap = $("#text-box").val() || randomZapArray[Math.floor(Math.random()*randomZapArray.length)]
     const mood = $(".mood-button.active").data("mood")
     const strength = Number($("#strength-slider").val() + 1)
@@ -73,7 +73,7 @@ $(() => {
     const rateValArr = [1, 0.95, 0.8, 0.7, 0.5, 0.45]
     const zapTokens = zap.split(" ").length
     let rate
-    
+
     for (let i = 0; i < rateLenArr.length; i++) {
       if (zapTokens < rateLenArr[i]) {
         rate = rateValArr[i]
@@ -81,15 +81,15 @@ $(() => {
       }
     }
     rate = rate || 0.5 // just to be safe
-    
+
     let tweet = $('#twitter-check').is(":checked")
     console.log(tweet)
-    $.post("/api/v1.0/zap", { zap, mood, strength, rate, tweet }, res => {
-      console.log("Texto zapeado com sucesso:", res)
-      
+    $.post("/api/zap", { zap, mood, strength, rate, tweet }, res => {
+      console.log("Texto zapeado com sucesso:", res.zap)
+
       $("#twitter-check").attr("checked", false).hide()
       $("#twitter-label").html("Você pode zapear seu texto novamente para mais emojis!")
-      
+
       $("#text-box").val(res.zap)
 
       $.LoadingOverlay("hide", true)
@@ -101,7 +101,7 @@ $(() => {
       setTimeout(() => $("#text-box").tooltip("dispose"), 2500)
 
       if (res.gemidao) {
-        new Audio("audio/gemidao.mp3").play()
+        new Audio("public/audio/gemidao.mp3").play()
       }
 
       $("#zapshare button").removeClass("hidden")
@@ -109,28 +109,8 @@ $(() => {
     })
   })
 
-  $("#suggest-form").on("submit", e => {
-    const word = $("#suggest-word").val()
-    let emojis = $("#suggest-emoji").val()
-
-    console.log({ word, emojis })
-    $.ajax({
-      url: "/api/v1.0/suggest",
-      type: "POST",
-      data: JSON.stringify({ word, emojis }),
-      contentType:"application/json; charset=utf-8",
-      // dataType:"json",
-      success: () => {
-        $(".collapse").collapse("hide")
-        setTimeout(() => { $(".suggestion-box").remove() }, 1000)
-      }
-    })
-    
-    e.preventDefault()
-  })
-
   $("#zapshare").on("click", function() {
     let zap = $("#text-box").val() + "\n\n Zapeado por http://vemdezapbe.be"
     this.href = `whatsapp://send?text=${encodeURI(zap)}`
-  })
-})
+  });
+});

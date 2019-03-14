@@ -1,1 +1,18 @@
-{}
+{
+  "version": 2,
+  "routes": [
+    { "src": "/api/zap", "methods": ["POST"], "dest": "/api/zap.js" },
+    { "src": "/api/version", "methods": ["GET"], "dest": "/api/version.js" }
+  ],
+  "builds": [
+    { "src": "public/**/*", "use": "@now/static" },
+    { "src": "api/*.js", "use": "@now/node" },
+    { "src": "*.html", "use": "@now/static" }
+  ],
+  "env": {
+    "TWITTER_ACCESS_TOKEN_KEY": "@vemdezapbebe-twitter-access-token-key",
+    "TWITTER_ACCESS_TOKEN_SECRET": "@vemdezapbebe-twitter-access-token-secret",
+    "TWITTER_CONSUMER_KEY": "@vemdezapbebe-twitter-consumer-key",
+    "TWITTER_CONSUMER_SECRET": "@vemdezapbebe-twitter-consumer-secret"
+  }
+}

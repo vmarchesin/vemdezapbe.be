@@ -17,11 +17,10 @@
   },
   "homepage": "https://github.com/vmarchesin/vemdezapbe.be#readme",
   "dependencies": {
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.18.3",
     "emojionearea": "^3.4.1",
-    "express": "^4.16.3",
+    "express": "^4.16.4",
     "gasparesganga-jquery-loading-overlay": "^2.0.2",
-    "request": "^2.85.0",
     "twitter": "^1.7.1"
   }
 }
