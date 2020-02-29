@@ -27,18 +27,6 @@ A API REST pode ser encontrada em `http://vemdezapbe.be/api`. Os seguintes endpo
 }
 ```
 
-- `/api/v1.0/suggest` - Retorna todas as sugestões oferecidas pelos usuários.
-
-```javascript
-{
-  version: "v1.0",
-  suggestions: { 
-    "palavra": ["emoji"], 
-    "palavra": ["emoji", "emoji"],
-  },
-}
-```
-
 ### POST
 - `/api/v1.0/zap` - Zapeia um texto
 
@@ -61,22 +49,5 @@ A API REST pode ser encontrada em `http://vemdezapbe.be/api`. Os seguintes endpo
   zap: "Zapeia 😄 esse 😀☺😀 texto 👌😋😆 bb 👶",
   gemidao: "HÃÃÃÃÃÃNNN ÕÕÕÕHH ÕÕÕÕÕÕÃHHH ÃÃÃÃÃÃÃHNN",
   requestTime: "75ms",
-}
-```
-
-- `/api/v1.0/suggest` - Envia uma sugestão de emoji
-
-  - Content-Type: `applicaton/json`
-  - Request:
-    - word `string`: Token que será comparado para o emoji (**required**)
-    - emojis `string`: String com um ou mais emojis que poderão ser aplicados ao token. É permitido enviar caracteres que não sejam emojis junto da string, mas estes não serão processados. (**required**)
-
-  - Response:
-    - success `boolean`: A sugestão foi recebida com sucesso.
-
-```javascript
-{
-  version: "v1.0",
-  success: true,
 }
 ```
