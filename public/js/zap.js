@@ -180,7 +180,7 @@ $(() => {
       event: 'vemdezap-share',
     })
 
-    let zap = $("#text-box").val() + "\n\n Zapeado por http://vemdezapbe.be"
+    let zap = $("#text-box").val() + "\n\n Zapeado por https://vemdezapbebe.herokuapp.com"
 
     this.href = `https://api.whatsapp.com/send?text=${encodeURI(zap)}`
   })
