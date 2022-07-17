@@ -30,6 +30,7 @@
     crossorigin="anonymous"></script>
   <script src="js/loadingoverlay.min.js"></script>
   <script src="js/zap.js?v=1.2.0"></script>
+  <script src="js/brain.min.js"></script>
 
   <!-- Twitter sharer plugin -->
   <script>window.twttr = (function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {}; if (d.getElementById(id)) return t; js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); t._e = []; t.ready = function (f) { t._e.push(f); }; return t; }(document, "script", "twitter-wjs"));</script>
@@ -152,6 +153,11 @@
               <img class="emoji" src="images/emojis/thermometer.png?v=1.1.0" alt="sick" />
               <br/> Doente
             </button>
+            <br/>
+            <small class="mb10">
+              - ou -
+            <br>
+            <button id="detect">Detectar (Experimental)</button>
           </section>
 
           <hr>

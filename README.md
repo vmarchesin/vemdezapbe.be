@@ -51,3 +51,8 @@ A API REST pode ser encontrada em `http://vemdezapbe.be/api`. Os seguintes endpo
   requestTime: "75ms",
 }
 ```
+
+# Contribuidores:
+* [Vinicius Marchesin Araujo](https://vmarches.in/)
+* [Roberto Pommella Alegro](https://github.com/Kasama)
+* [Eduardo P. Gomez](https://eduardo.ix.tc)

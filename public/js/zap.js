@@ -1,4 +1,5 @@
 const zapEmojisPerStrength = [1, 2, 3, 4, 7]
+let ai
 const emojiArray = {
   angry: ["steaming", "skullandbones", "angry", "stop", "under18", "bomb", "cursing"],
   happy: ["crazy", "surprised", "sunglasses", "muscle", "lol", "okay", "top"],
@@ -22,6 +23,14 @@ const randomZapArray = [
   "E aí gata, se eu for correndo vc vem de zap?",
   "Fora Temer, Fora Lula, Fora Dilma, fora todo mundo! Eu quero é o meteoro!"
 ]
+const data_types = {
+  0: "null",
+  1: "angry",
+  2: "happy",
+  3: "sad",
+  4: "sassy",
+  5: "sick"
+}
 
 const zapStrengthShow = value => {
   const mood = $(".mood-button.active").data("mood")
@@ -41,6 +50,9 @@ const pushEventToDataLayer = event => {
 }
 
 $(window).on("load", () => {
+  //setupa o texto do zap:
+  $("#text-box").val(randomZapArray[Math.floor(Math.random() * randomZapArray.length)])
+
   // Preload images
   $.fn.preload = function() {
     this.each(function(){
@@ -50,6 +62,41 @@ $(window).on("load", () => {
 
   Object.values(emojiArray).forEach(arr => {
     $(arr.map(emoji => `images/emojis/${emoji}.png?v=1.1.0`)).preload()
+  })
+
+  $("#detect").on("click", () => {
+    $("#detect").attr("disabled", true)
+    $("#text-box").attr("disabled", true)
+    $("#detect").html("Carregando...")
+
+    if (!$("#text-box").val()) {
+      $("#text-box").val(randomZapArray[Math.floor(Math.random() * randomZapArray.length)])
+    }
+
+    //fetch ai model:
+    $.ajax({
+      url: "/ai.json",
+      success: (data) => {
+        ai = new brain.recurrent.RNN({});
+        ai.fromJSON(data);
+
+        let mood = data_types[ai.run($("#text-box").val().toLowerCase())];
+        //console.log(mood) //use para debug
+
+        if (mood == undefined || mood == "null") {
+          alert("Não consegui detectar o seu humor. Tente outra vez!"); //acontece pois /data.json é muito pequeno
+          $("#detect").attr("disabled", false)
+          $("#text-box").attr("disabled", false)
+          return
+        }
+
+        $(".mood-button").removeClass("active")
+        $(`.mood-button[data-mood="${mood}"]`).addClass("active")
+        $("#detect").attr("disabled", false)
+        $("#text-box").attr("disabled", false)
+        $("#detect").html("Detectar (Experimental)")
+      }
+    })
   })
 })
 
@@ -134,6 +181,12 @@ $(() => {
     })
 
     let zap = $("#text-box").val() + "\n\n Zapeado por http://vemdezapbe.be"
-    this.href = `whatsapp://send?text=${encodeURI(zap)}`
+
+    this.href = `https://api.whatsapp.com/send?text=${encodeURI(zap)}`
   })
 })
+
+//detect mobile devices via user agent
+function isMobile() {
+  return /Android|iPhone|iPad/i.test(navigator.userAgent);
+}

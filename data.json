@@ -1,0 +1,36 @@
+[
+  {
+    "input":"abcdefghijklmnopqrstuvwxyzçãẽĩõũâêîôûáéíóúàèìò0123456789.,;:!?@#$%^&*()_+-=<>[]{}|/\\'\"",
+    "output":"0"
+  }, {
+    "input":"lambe meu saco",
+    "output":"4"
+  }, {
+    "input":"vou te amar",
+    "output":"2"
+  }, {
+    "input":"peguei coronga",
+    "output":"5"
+  }, {
+    "input":"ninguém gosta de mim",
+    "output":"3"
+  }, {
+    "input":"eu te odeio seu merda!",
+    "output":"1"
+  }, {
+    "input":"vamos fazer... sexo?",
+    "output":"4"
+  }, {
+    "input":"que lindo dia!",
+    "output":"2"
+  }, {
+    "input":"eu vou acabar morrendo na uti.",
+    "output":"5"
+  }, {
+    "input":"sim, ele cometeu suicídio",
+    "output":"3"
+  }, {
+    "input":"seu desgraçado filho duma puta eu vou te matar",
+    "output":"1"
+  }
+]
