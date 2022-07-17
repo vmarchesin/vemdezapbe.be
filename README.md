@@ -16,7 +16,7 @@ vemdezapbe.be é um zapeador de textos automático. O objetivo é enviar um text
 
 # API
 
-A API REST pode ser encontrada em `http://vemdezapbe.be/api`. Os seguintes endpoints estão disponíveis:
+A API REST pode ser encontrada em `https://vemdezapbebe.herokuapp.com/api`. Os seguintes endpoints estão disponíveis:
 
 ### GET
 - `/api` - Retorna a versão mais recente da API. A versão atual é `v1.0`. Todas as chamadas da API retornam junto a versão atual.
