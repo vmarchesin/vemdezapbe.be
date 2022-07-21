@@ -77,11 +77,11 @@ $(window).on("load", () => {
     $.ajax({
       url: "/ai.json",
       success: (data) => {
-        ai = new brain.recurrent.RNN({});
+        ai = new brain.recurrent.LSTM({});
         ai.fromJSON(data);
 
         let mood = data_types[ai.run($("#text-box").val().toLowerCase())];
-        //console.log(mood) //use para debug
+        console.log(mood) //use para debug
 
         if (mood == undefined || mood == "null") {
           alert("Não consegui detectar o seu humor. Tente outra vez!"); //acontece pois /data.json é muito pequeno

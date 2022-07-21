@@ -15,7 +15,7 @@ const colors = require("colors");
 const finalTest = "Eu prefiro morrer do que perder a vida!";
 const ai_src = "public/ai.json";
 const data_src = "data.json";
-const epochs = 100; //reduza o valor se muitos dados forem colocados
+const epochs = 500; //reduza o valor se muitos dados forem colocados
 
 const data_types = {
   0: "null",
@@ -26,12 +26,20 @@ const data_types = {
   5: "sick"
 }
 
-const ai = new brain.recurrent.RNN({});
+// text classifier:
+const ai = new brain.recurrent.LSTM({
+  //activation: "tanh",
+  // inputSize: 4,
+  // hiddenLayers: [
+  //   6, 4, 2
+  // ],
+  outputSize: 1
+});
 let data = [];
 let testIndex = 0;
 
 //check for --new flag
-if (!process.argv.includes("--new") || fs.existsSync(ai_src)) {
+if (!process.argv.includes("--new")) {
   try {
     const json = JSON.parse(fs.readFileSync(ai_src));
     ai.fromJSON(json);
@@ -40,7 +48,15 @@ if (!process.argv.includes("--new") || fs.existsSync(ai_src)) {
   }
 }
 
+console.log("[I] Processando dados...".blue);
+
 data = JSON.parse(fs.readFileSync(data_src));
+
+for (let x in data) {
+  data[x].input = data[x].input;
+  //data[x].output = parseInt(data[x].output);
+  console.log(data[x]);
+}
 
 ai.train(data, {
   iterations: epochs * data.length,
@@ -51,11 +67,13 @@ ai.train(data, {
     console.log("\n{");
     console.log("  in:".cyan, data[testIndex].input.yellow);
     let output = ai.run(data[testIndex].input);
+
     try {
-      console.log("  out:".cyan, data_types[output].gray);
+      console.log("  out:".cyan, (`${output} (${data_types[output]})`).gray);
     } catch (e) {
       console.log("  out:".cyan, "undefined".red);
     }
+
     console.log("}");
     console.log("<----------------".red);
 
