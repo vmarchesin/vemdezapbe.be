@@ -53,6 +53,18 @@ footer {
   min-height: 100px;
 }
 
+button {
+  margin: 10px;
+  background-color: white;
+  border-radius: 4px;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  cursor: pointer;
+}
+
 /* Styles */
 .suggestion-box {
   border: 1px solid #075E54;
@@ -81,19 +93,8 @@ footer {
 }
 
 .mood-button {
-  margin: 10px;
   width: 100px;
   height: 100px;
-
-  cursor: pointer;
-
-  background-color: white;
-  border-radius: 4px;
-  border: none;
-  text-align: center;
-  text-decoration: none;
-
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 .mood-button.active {
@@ -116,13 +117,19 @@ footer {
   font-weight: 600;
 }
 
+#detect {
+  background-color: #2566D3;
+  font-weight: bold;
+  color: white;
+  height: 50px;
+  width: 150px;
+}
+
 .zap {
   background-color: #25D366;
   font-weight: bold;
   color: white;
   border: none;
-  cursor: pointer;
-  border-radius: 4px;
   width: 150px;
   height: 50px;
   transition: 0.4s;

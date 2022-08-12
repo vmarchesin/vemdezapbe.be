@@ -4,7 +4,8 @@
   "description": "Vem de zap bb",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "train": "node train.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,8 @@
   "homepage": "https://github.com/vmarchesin/vemdezapbe.be#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "brain.js": "^1.6.1",
+    "colors": "^1.4.0",
     "emojionearea": "^3.4.1",
     "express": "^4.16.3",
     "gasparesganga-jquery-loading-overlay": "^2.0.2",
